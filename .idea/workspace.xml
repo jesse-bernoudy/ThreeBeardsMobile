@@ -15,7 +15,41 @@
     </layouts>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c121eaf-3d7e-4934-a5e9-6bc0152a4c54" name="Default" comment="" />
+    <list default="true" id="9c121eaf-3d7e-4934-a5e9-6bc0152a4c54" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/copyright/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/gradle.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/runConfigurations.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/proguard-rules.pro" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/androidTest/java/com/threebeardsmobile/taskapp/ApplicationTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/controller/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/model/Project.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/model/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/model/Task.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/model/TaskBase.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/java/com/threebeardsmobile/taskapp/view/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/values/colors.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/values/strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/main/res/values/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/app/src/test/java/com/threebeardsmobile/taskapp/ExampleUnitTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/gradle.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/gradle/wrapper/gradle-wrapper.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/gradle/wrapper/gradle-wrapper.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/gradlew" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/taskapp/gradlew.bat" afterPath="" />
+    </list>
     <ignored path="TaskApp.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1871,6 +1905,10 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>

@@ -55,7 +55,7 @@ git push
 ```
 If prompted for a username and password you use your GitHub credentials
 
-Now that you have pushed up your code, you may need to (https://git-scm.com/docs/git-merge)[merge] with others work
+Now that you have pushed up your code, you may need to [merge](https://git-scm.com/docs/git-merge) with others work
  ```
 git fetch --all
 git merge origin/unstable
@@ -66,12 +66,12 @@ git push
 ```
 If there are not merge conflicts then you can just do a push
 
-Once you feature is ready to merge to Unstable you go to GitHub and make a [https://help.github.com/articles/using-pull-requests/](pull request) from your branch to Unstable. You need two thumbs up before your code is ready to be merged. Someone other than you should merge it.
+Once you feature is ready to merge to Unstable you go to GitHub and make a [pull request](https://help.github.com/articles/using-pull-requests/) from your branch to Unstable. You need two thumbs up before your code is ready to be merged. Someone other than you should merge it.
 
 For More Help visit
-- (Cheat Sheet) [https://gist.github.com/iansheridan/870778]
-- (Index of git commands) [https://git-scm.com/book/commands]
-- (Reference) [https://git-scm.com/docs]
+- [Cheat Shee](https://gist.github.com/iansheridan/870778)
+- [Index of git commands](https://git-scm.com/book/commands)
+- [Reference](https://git-scm.com/docs)
 
 
 If all else fails, delete your repo and start again.

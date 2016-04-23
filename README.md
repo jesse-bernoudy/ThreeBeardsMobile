@@ -69,7 +69,7 @@ If there are not merge conflicts then you can just do a push
 Once you feature is ready to merge to Unstable you go to GitHub and make a [pull request](https://help.github.com/articles/using-pull-requests/) from your branch to Unstable. You need two thumbs up before your code is ready to be merged. Someone other than you should merge it.
 
 For More Help visit
-- [Cheat Shee](https://gist.github.com/iansheridan/870778)
+- [Cheat Sheet](https://gist.github.com/iansheridan/870778)
 - [Index of git commands](https://git-scm.com/book/commands)
 - [Reference](https://git-scm.com/docs)
 

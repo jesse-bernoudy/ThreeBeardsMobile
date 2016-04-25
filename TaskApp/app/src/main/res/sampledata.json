@@ -1,0 +1,70 @@
+// Create a sample user object along with that users root project. 
+// Populate the root project with 1 sample project and 1 task
+// Poopulate the sample project with one task
+/*
+
+UserRoot
+	>Project1
+		> P1-Task1
+	>Task1
+
+*/
+
+{
+"user": "User McUser",
+"rootProject": 
+	{
+	"parentProject": null,	
+	"itemID": 64643,
+	"itemType": "Project",
+	"itemName": "username+root",
+	"itemDescription": "",
+	"createdBy": "User McUser",
+	"category": "root",
+	"dateCreated": "04/24/2016",
+	"dueDate": null,
+	"assignedTo": "User McUser",
+	"items": 
+		[ 
+			{ 
+				"parentProject": "rootProject",
+				"itemID": 64644,
+				"itemType": "Project",
+				"itemName": "Name of Project",
+				"itemDescription": "",
+				"createdBy": "User McUser",
+				"category": "Test Project",
+				"dateCreated": "04/24/2016",
+				"dueDate": "04/27/2016",
+				"assignedTo": "User McUser",
+				"priority":3,
+				"items" : 
+					[
+						{
+							"itemID": 64645,
+							"itemType": "P1-Task1",
+							"itemName": "Name of Task",
+							"itemDescription": "",
+							"createdBy": "User McUser",
+							"category": "Test Task",
+							"dateCreated": "04/24/2016",
+							"dueDate": "04/27/2016",
+							"assignedTo": "User McUser",
+							"priority":3
+						}
+					]
+			},{
+				"itemID": 64646,
+				"itemType": "Task1",
+				"itemName": "Name of Task",
+				"itemDescription": "",
+				"createdBy": "User McUser",
+				"category": "Test Task",
+				"dateCreated": "04/24/2016",
+				"dueDate": "04/27/2016",
+				"assignedTo": "User McUser",
+				"priority":3
+			}
+		]
+	}
+}

@@ -5,8 +5,9 @@ package com.threebeardsmobile.taskapp.model;
  */
 public class Task extends TaskBase {
 
-    // Field for assigned user.
+    String user;
 
-    //Constructors
+
+
 
 }

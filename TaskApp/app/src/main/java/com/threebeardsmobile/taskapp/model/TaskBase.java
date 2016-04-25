@@ -15,6 +15,10 @@ public abstract class TaskBase
     Date dateAdded, dueDate;
     int priority;
 
+    public TaskBase(){
+
+    }
+
     public long getTaskID() {
         return taskID;
     }

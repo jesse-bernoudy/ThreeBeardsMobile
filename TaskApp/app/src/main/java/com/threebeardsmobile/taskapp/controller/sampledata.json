@@ -1,15 +1,3 @@
-// Create a sample user object along with that users root project. 
-// Populate the root project with 1 sample project and 1 task
-// Poopulate the sample project with one task
-/*
-
-UserRoot
-	>Project1
-		> P1-Task1
-	>Task1
-
-*/
-
 {
 "user": "User McUser",
 "rootProject": 

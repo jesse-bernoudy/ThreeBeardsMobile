@@ -12,6 +12,13 @@ public class Task extends ToDoItem {
 
     String assignedTo;
 
+    public String getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(String assignedTo) {
+        this.assignedTo = assignedTo;
+    }
 
     public Task(JSONObject projectJson) throws JSONException {
         super(projectJson);

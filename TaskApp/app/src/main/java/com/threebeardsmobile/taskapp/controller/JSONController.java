@@ -5,6 +5,7 @@ import com.threebeardsmobile.taskapp.model.Task;
 import com.threebeardsmobile.taskapp.model.ToDoItem;
 import com.threebeardsmobile.taskapp.model.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,26 +36,28 @@ public class JSONController {
 
     private static JSONObject getJsonFromProject(Project project){
         JSONObject projectJson = new JSONObject();
-
+        JSONArray items = new JSONArray();
         try{
             projectJson.put("parentProject", project.getParentProject());
             projectJson.put("itemID", project.getItemID());
             projectJson.put("itemType", "Project");
-            projectJson.put("itemName", project.getItemID());
-            projectJson.put("itemDescription", project.getItemID());
-            projectJson.put("createdBy", project.getItemID());
-            projectJson.put("category", project.getItemID());
-            projectJson.put("dateCreated", project.getItemID());
-            projectJson.put("dueDate", project.getItemID());
-            projectJson.put("assignedTo", project.getItemID());
+            projectJson.put("itemName", project.getItemName());
+            projectJson.put("itemDescription", project.getItemDescription());
+            projectJson.put("createdBy", project.getCreatedBy());
+            projectJson.put("category", project.getCategory());
+            projectJson.put("dateCreated", project.getDateAdded());
+            projectJson.put("dueDate", project.getDueDate());
+            projectJson.put("assignedTo", project.getProjectOwner());
             projectJson.put("priority", project.getPriority());
+            projectJson.put("items", items);
+
 
             for (ToDoItem item : project.getChildItems()){
                 if (item instanceof Project){
                     JSONObject subproject = getJsonFromProject((Project)item);
-                    projectJson.put("items", subproject);
+                    items.put(subproject);
                 } else {
-                    projectJson.put("items", getJsonFromTask((Task)item));
+                    items.put(getJsonFromTask((Task)item));
                 }
             }
 
@@ -72,12 +75,12 @@ public class JSONController {
             taskJson.put("itemID", task.getItemID());
             taskJson.put("itemType", "Task" );
             taskJson.put("itemName", task.getItemName());
-            taskJson.put("itemDescription", task.getItemID());
-            taskJson.put("createdBy", task.getItemID());
-            taskJson.put("category", task.getItemID());
-            taskJson.put("dateCreated", task.getItemID());
-            taskJson.put("dueDate", task.getItemID());
-            taskJson.put("assignedTo", task.getItemID());
+            taskJson.put("itemDescription", task.getItemDescription());
+            taskJson.put("createdBy", task.getCreatedBy());
+            taskJson.put("category", task.getCategory());
+            taskJson.put("dateCreated", task.getDateAdded());
+            taskJson.put("dueDate", task.getDueDate());
+            taskJson.put("assignedTo", task.getAssignedTo());
             taskJson.put("priority", task.getPriority());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,7 +92,7 @@ public class JSONController {
     }
 
     public static User buildUserFromJson(JSONObject json){
-        User user = new User();
+//        User user = new User();
         return null;
     }
 

@@ -8,11 +8,13 @@ import java.util.Date;
 
 /**
  * Created by DUB on 4/16/16.
+ *
  */
 public class Project extends ToDoItem {
 
     //Collection for child projects and tasks
     public ArrayList<ToDoItem> childItems;
+
     //Project Owner field
     public String projectOwner;
     private Project parentProject;
@@ -46,5 +48,13 @@ public class Project extends ToDoItem {
 
     public ArrayList<ToDoItem> getChildItems() {
         return childItems;
+    }
+
+    public String getProjectOwner() {
+        return projectOwner;
+    }
+
+    public void setProjectOwner(String projectOwner) {
+        this.projectOwner = projectOwner;
     }
 }

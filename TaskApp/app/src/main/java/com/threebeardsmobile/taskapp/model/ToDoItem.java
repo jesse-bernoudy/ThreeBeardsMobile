@@ -46,9 +46,9 @@ public abstract class ToDoItem
         return itemID;
     }
 
-    public void setItemID(long itemID) {
-        this.itemID = itemID;
-    }
+//    public void setItemID(long itemID) {
+//        this.itemID = itemID;
+//    }
 
     public String getItemName() {
         return itemName;
@@ -70,9 +70,9 @@ public abstract class ToDoItem
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+//    public void setCreatedBy(String createdBy) {
+//        this.createdBy = createdBy;
+//    }
 
     public String getCategory() {
         return category;
@@ -86,9 +86,9 @@ public abstract class ToDoItem
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
-        this.dateAdded = dateAdded;
-    }
+//    public void setDateAdded(Date dateAdded) {
+//        this.dateAdded = dateAdded;
+//    }
 
     public Date getDueDate() {
         return dueDate;

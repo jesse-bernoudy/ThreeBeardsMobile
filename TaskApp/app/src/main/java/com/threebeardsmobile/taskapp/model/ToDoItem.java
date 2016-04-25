@@ -29,6 +29,19 @@ public abstract class ToDoItem
         priority = (int) projectJson.get("priority");
     }
 
+    public ToDoItem(long itemID, String itemName, String itemDescription, String createdBy,
+                    String category, Date dateAdded, Date dueDate, int priority)
+    {
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.createdBy = createdBy;
+        this.category = category;
+        this.dateAdded = dateAdded;
+        this.dueDate = dueDate;
+        this.priority = priority;
+    }
+
     public long getItemID() {
         return itemID;
     }

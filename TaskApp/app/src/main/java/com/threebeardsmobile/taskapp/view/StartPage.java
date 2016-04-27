@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
@@ -16,21 +13,18 @@ import com.threebeardsmobile.taskapp.model.TaskBase;
 
 import java.util.ArrayList;
 
-import static android.widget.AdapterView.*;
-
-public class TaskViewer extends ListActivity {
-
+public class StartPage extends ListActivity {
     private ArrayList<TaskBase> tasks;
     private TaskItemAdapter adapter;
 
-    public OnItemClickListener itemClickListener = new OnItemClickListener() {
+    public AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Either drill down in the list, or display the task details
             TaskBase selected = tasks.get(position);
             if(selected instanceof Project) {
                 // Drill down
-                Intent intent = new Intent(TaskViewer.this, TaskViewer.class);
+                Intent intent = new Intent(StartPage.this, TaskViewer.class);
                 startActivity(intent);
             } else {
                 // Display detail view
@@ -38,7 +32,7 @@ public class TaskViewer extends ListActivity {
         }
     };
 
-    public OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
+    public AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             return false;
@@ -48,7 +42,7 @@ public class TaskViewer extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_viewer);
+        setContentView(R.layout.activity_start_page);
 
         //ToDo: Replace with root TaskBase list instance from Controller
         tasks = new ArrayList<>();
@@ -76,9 +70,5 @@ public class TaskViewer extends ListActivity {
         // Register click listeners for when an item is clicked or long clicked
         getListView().setOnItemClickListener(itemClickListener);
         getListView().setOnItemLongClickListener(itemLongClickListener);
-
-        Button detailsButton = (Button) findViewById(R.id.details_button);
-        detailsButton.setText(p.getTaskName());
     }
-
 }

@@ -64,7 +64,7 @@ git add <files that you fixed>
 git commit -m "Merging in Unstable"
 git push
 ```
-If there are not merge conflicts then you can just do a push
+If there are no merge conflicts then you can just do a push
 
 Once you feature is ready to merge to Unstable you go to GitHub and make a [pull request](https://help.github.com/articles/using-pull-requests/) from your branch to Unstable. You need two thumbs up before your code is ready to be merged. Someone other than you should merge it.
 

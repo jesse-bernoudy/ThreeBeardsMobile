@@ -1,5 +1,10 @@
 package com.threebeardsmobile.taskapp.model;
 
+import com.threebeardsmobile.taskapp.controller.JSONController;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,6 +38,10 @@ public class User {
                 name, //projectOwner
                 null //parentProject
                 );
+    }
+
+    public User (JSONObject json){
+
     }
 
     public String getUserName() {

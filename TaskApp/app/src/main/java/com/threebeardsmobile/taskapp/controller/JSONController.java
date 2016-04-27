@@ -1,14 +1,10 @@
 package com.threebeardsmobile.taskapp.controller;
 
-import com.threebeardsmobile.taskapp.model.Project;
-import com.threebeardsmobile.taskapp.model.Task;
-import com.threebeardsmobile.taskapp.model.ToDoItem;
-import com.threebeardsmobile.taskapp.model.User;
+import com.threebeardsmobile.taskapp.model.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
@@ -92,9 +88,10 @@ public class JSONController {
     }
 
     public static User buildUserFromJson(JSONObject json){
-//        User user = new User();
+        User user = new User(json);
         return null;
     }
+
 
 
 }

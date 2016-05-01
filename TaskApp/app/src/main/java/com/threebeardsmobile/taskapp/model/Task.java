@@ -29,10 +29,10 @@ public class Task extends ToDoItem {
         assignedTo = (String) projectJson.get("assignedTo");
     }
 
-    public Task(long itemID, String itemName, String itemDescription, String createdBy,
+    public Task( String itemName, String itemDescription, String createdBy,
                 String category, Date dateAdded, Date dueDate, int priority, String assignedTo)
     {
-        super(itemID, itemName, itemDescription, createdBy, category, dateAdded, dueDate, priority);
+        super( itemName, itemDescription, createdBy, category, dateAdded, dueDate, priority);
         this.assignedTo = assignedTo;
     }
 }

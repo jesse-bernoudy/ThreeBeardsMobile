@@ -29,11 +29,11 @@ public class Project extends ToDoItem {
         // // TODO: 5/1/16  
     }
 
-    public Project(long itemID, String itemName, String itemDescription, String createdBy,
+    public Project(String itemName, String itemDescription, String createdBy,
                    String category, Date dateAdded, Date dueDate, int priority,
-                   ArrayList<ToDoItem> childItems, String projectOwner, Project parentProject) {
-        super(itemID, itemName, itemDescription, createdBy, category, dateAdded, dueDate, priority);
-        this.childItems = childItems;
+                    String projectOwner, Project parentProject) {
+        super(itemName, itemDescription, createdBy, category, dateAdded, dueDate, priority);
+        this.childItems = new ArrayList<>();
         this.projectOwner = projectOwner;
         this.parentProject = parentProject;
     }
@@ -59,4 +59,10 @@ public class Project extends ToDoItem {
     public void setProjectOwner(String projectOwner) {
         this.projectOwner = projectOwner;
     }
+
+//    public long getNextProjectId(){
+//
+//        return lastProjectId++;
+//
+//    }
 }

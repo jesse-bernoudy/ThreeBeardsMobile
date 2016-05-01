@@ -16,19 +16,18 @@ public class User {
     Project rootProject;
     String userName;
     long userID;
-
-    long lastProjectId; //todo
+    long lastProjectId; // Superfluous
 
 
 
     public User(long id, String name){
         userID = id;
         userName = name;
+        lastProjectId = 1;
 
         Date createdDate = new Date();
 
         rootProject = new Project(
-                01,//rootProjectID
                 "root", //itemName
                 "", //itemDescription
                 name, //createdBy
@@ -36,7 +35,6 @@ public class User {
                 createdDate, //dateAdded
                 null, //dueDate
                 0, //Priority
-                new ArrayList<ToDoItem>(),//childItems
                 name, //projectOwner
                 null //parentProject
                 );
@@ -57,5 +55,7 @@ public class User {
     public Project getRootProject() {
         return rootProject;
     }
+
+
 
 }

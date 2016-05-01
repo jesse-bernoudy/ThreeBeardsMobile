@@ -17,6 +17,8 @@ public class User {
     String userName;
     long userID;
 
+    long lastProjectId; //todo
+
 
 
     public User(long id, String name){
@@ -41,7 +43,7 @@ public class User {
     }
 
     public User (JSONObject json){
-
+        // // TODO: 5/1/16
     }
 
     public String getUserName() {

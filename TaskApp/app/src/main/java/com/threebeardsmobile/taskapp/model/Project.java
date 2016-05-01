@@ -26,6 +26,7 @@ public class Project extends ToDoItem {
 
     public Project(JSONObject projectJSON) throws JSONException {
         super(projectJSON);
+        // // TODO: 5/1/16  
     }
 
     public Project(long itemID, String itemName, String itemDescription, String createdBy,

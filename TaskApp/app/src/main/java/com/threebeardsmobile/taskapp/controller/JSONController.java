@@ -1,17 +1,29 @@
 package com.threebeardsmobile.taskapp.controller;
 
+import android.os.Environment;
+
 import com.threebeardsmobile.taskapp.model.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
  * Created by bob on 4/24/16.
  */
 public class JSONController {
+    static final String mFile =
+            Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS) + "/user_tasks.json";
 
     private JSONController(){ /* No instantiaton */}
 
@@ -92,6 +104,25 @@ public class JSONController {
         return  new User(json);
     }
 
+    public static JSONObject getJsonFromFile() throws JSONException {
+        // Check if file exists
+        File jsonFile = new File(mFile);
+        StringBuffer json = new StringBuffer();
+        try {
+            //Normal operation - Scan JSON file from disk to string,
+            // return new JSONObject
+            Scanner scan = new Scanner(jsonFile);
+            while (scan.hasNext()){
+                json.append(scan.next());
+            }
+            return new JSONObject(String.valueOf(json));
+
+        } catch (FileNotFoundException e) {
+            json.delete(0, json.length());
+            json.append("{}");
+            return new JSONObject(String.valueOf(json));
+        }
+    }
 
 
 }

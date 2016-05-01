@@ -9,22 +9,22 @@ import android.widget.TextView;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
-import com.threebeardsmobile.taskapp.model.TaskBase;
+import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by Jesse on 4/23/2016.
  */
-public class TaskItemAdapter extends ArrayAdapter<TaskBase> {
-    public TaskItemAdapter(Context context, ArrayList<TaskBase> users) {
+public class TaskItemAdapter extends ArrayAdapter<ToDoItem> {
+    public TaskItemAdapter(Context context, ArrayList<ToDoItem> users) {
         super(context, 0, users);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        TaskBase task = getItem(position);
+        ToDoItem task = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             if(task instanceof Project){
@@ -37,8 +37,8 @@ public class TaskItemAdapter extends ArrayAdapter<TaskBase> {
         TextView taskName = (TextView) convertView.findViewById(R.id.taskName);
         TextView taskDesc = (TextView) convertView.findViewById(R.id.taskDesc);
         // Populate the data into the template view using the data object
-        taskName.setText(task.getTaskName());
-        taskDesc.setText(task.getTaskDescription());
+        taskName.setText(task.getItemName());
+        taskDesc.setText(task.getItemDescription());
         // Return the completed view to render on screen
         return convertView;
     }

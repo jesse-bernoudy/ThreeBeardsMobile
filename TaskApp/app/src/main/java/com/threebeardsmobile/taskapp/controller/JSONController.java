@@ -88,8 +88,7 @@ public class JSONController {
     }
 
     public static User buildUserFromJson(JSONObject json){
-        User user = new User(json);
-        return null;
+        return  new User(json);
     }
 
 

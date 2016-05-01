@@ -16,17 +16,18 @@ public class User {
     Project rootProject;
     String userName;
     long userID;
+    long lastProjectId; // Superfluous
 
 
 
     public User(long id, String name){
         userID = id;
         userName = name;
+        lastProjectId = 1;
 
         Date createdDate = new Date();
 
         rootProject = new Project(
-                01,//rootProjectID
                 "root", //itemName
                 "", //itemDescription
                 name, //createdBy
@@ -34,14 +35,13 @@ public class User {
                 createdDate, //dateAdded
                 null, //dueDate
                 0, //Priority
-                new ArrayList<ToDoItem>(),//childItems
                 name, //projectOwner
                 null //parentProject
                 );
     }
 
     public User (JSONObject json){
-
+        // // TODO: 5/1/16
     }
 
     public String getUserName() {
@@ -55,5 +55,7 @@ public class User {
     public Project getRootProject() {
         return rootProject;
     }
+
+
 
 }

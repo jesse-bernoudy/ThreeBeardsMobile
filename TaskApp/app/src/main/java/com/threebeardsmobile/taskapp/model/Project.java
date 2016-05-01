@@ -21,7 +21,7 @@ public class Project extends ToDoItem {
     //Constructors
 
     public Project() {
-
+        childItems = new ArrayList<>();
     }
 
     public Project(JSONObject projectJSON) throws JSONException {

@@ -24,4 +24,5 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/details_button"
         android:choiceMode="singleChoice" />
+
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.threebeardsmobile.taskapp.controller;
 
 import android.os.Environment;
+import android.util.Log;
 
 import com.threebeardsmobile.taskapp.model.*;
 
@@ -100,7 +101,7 @@ public class JSONController {
     }
 
     public static User buildUserFromJson(JSONObject json){
-
+        Log.d("", "buildUserFromJson: ");
         return  new User(json);
     }
 
@@ -121,6 +122,18 @@ public class JSONController {
             json.delete(0, json.length());
             json.append("{}");
             return new JSONObject(String.valueOf(json));
+        }
+    }
+
+    public static boolean writeJsonToFile(JSONObject userJson){
+        try {
+            FileWriter jsonWrite = new FileWriter(mFile, false);
+            jsonWrite.write(String.valueOf(userJson));
+            jsonWrite.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

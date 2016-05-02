@@ -1,5 +1,7 @@
 package com.threebeardsmobile.taskapp.controller;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -9,11 +11,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -105,37 +114,65 @@ public class JSONController {
         return  new User(json);
     }
 
-    public static JSONObject getJsonFromFile() throws JSONException {
-        // Check if file exists
-        File jsonFile = new File(mFile);
-        StringBuffer json = new StringBuffer();
+    public static JSONObject getJsonFromFile(Context context) throws JSONException {
+        InputStream is = null;
         try {
-            //Normal operation - Scan JSON file from disk to string,
-            // return new JSONObject
-            Scanner scan = new Scanner(jsonFile);
-            while (scan.hasNext()){
-                json.append(scan.next());
-            }
-            return new JSONObject(String.valueOf(json));
-
+            is = context.openFileInput("user_tasks.json");
         } catch (FileNotFoundException e) {
-            json.delete(0, json.length());
-            json.append("{}");
-            return new JSONObject(String.valueOf(json));
-        }
-    }
+            Log.e("#### File error ####", "getJsonFromFile: FAILED");
 
-    public static boolean writeJsonToFile(JSONObject userJson){
+        }
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-            FileWriter jsonWrite = new FileWriter(mFile, false);
-            jsonWrite.write(String.valueOf(userJson));
-            jsonWrite.close();
-            return true;
+            String line = br.readLine();
+            while (line != null){
+                Log.d("####$$$####", line);
+                stringBuilder.append(line);
+                line = br.readLine();
+            }
+            return new JSONObject(stringBuilder.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
+
+        return null;
+//        // Check if file exists
+//        File jsonFile = new File(mFile);
+//        StringBuffer json = new StringBuffer();
+//        try {
+//            //Normal operation - Scan JSON file from disk to string,
+//            // return new JSONObject
+//            Scanner scan = new Scanner(jsonFile);
+//            while (scan.hasNext()){
+//                json.append(scan.next());
+//            }
+//            return new JSONObject(String.valueOf(json));
+//
+//        } catch (FileNotFoundException e) {
+//            json.delete(0, json.length());
+//            json.append("{}");
+//            return new JSONObject(String.valueOf(json));
+//        }
     }
 
+    public static boolean writeJsonToFile(Context context, JSONObject userJson) throws IOException {
+        OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("user_tasks.json", Context.MODE_PRIVATE));
+        osw.write(userJson.toString());
+        osw.append("{}");
+        osw.close();
+        return true;
+
+//        try {
+//            FileWriter jsonWrite = new FileWriter(mFile, false);
+//            jsonWrite.write(String.valueOf(userJson));
+//            jsonWrite.close();
+//            return true;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+    }
 
 }

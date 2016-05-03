@@ -19,7 +19,7 @@
         android:paddingBottom="16dp"/>
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/task_list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/details_button"

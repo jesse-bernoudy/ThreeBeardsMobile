@@ -13,14 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Catchy App Name"
+        android:text="@string/app_name"
         android:gravity="fill_horizontal"
         android:paddingBottom="16dp"/>
 
-    <ListView
-        android:id="@android:id/list"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/logo"
-        android:choiceMode="singleChoice" />
+        android:layout_height="match_parent" />
 </RelativeLayout>

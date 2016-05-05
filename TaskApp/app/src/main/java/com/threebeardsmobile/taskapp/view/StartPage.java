@@ -1,8 +1,12 @@
 package com.threebeardsmobile.taskapp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
@@ -11,13 +15,20 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 import java.util.ArrayList;
 
-public class StartPage extends AppCompatActivity implements TaskViewer.OnTaskItemSelectedListener {
+public class StartPage extends AppCompatActivity implements TaskListFragment.OnTaskItemSelectedListener {
     private ArrayList<ToDoItem> tasks;
+    private int projectIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         //ToDo: Replace with root TaskBase list instance from Controller
         tasks = new ArrayList<>();
@@ -41,8 +52,25 @@ public class StartPage extends AppCompatActivity implements TaskViewer.OnTaskIte
         showTaskViewer(tasks);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                projectIndex--;
+                return true;
+            case R.id.back_arrow:
+                Toast.makeText(this, "Back Arrow", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.edit_button:
+                startActivity(new Intent(getApplicationContext(), TaskEditView.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void showTaskViewer(ArrayList<ToDoItem> root) {
-        TaskViewer newFragment = TaskViewer.newInstance(root);
+        TaskListFragment newFragment = TaskListFragment.newInstance(root);
         Bundle args = new Bundle();
         newFragment.setArguments(args);
 
@@ -64,8 +92,12 @@ public class StartPage extends AppCompatActivity implements TaskViewer.OnTaskIte
         if(selected instanceof Project) {
             // Drill down
             showTaskViewer(((Project) selected).getChildItems());
+            projectIndex++;
         } else {
             // Display detail view
+            Intent intent = new Intent(this, TaskDetailView.class);
+            intent.putExtra(TaskDetailView.EXTRA_MESSAGE, new int[] {projectIndex, position});
+            startActivity(intent);
         }
     }
 }

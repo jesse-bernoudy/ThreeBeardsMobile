@@ -1,18 +1,12 @@
 package com.threebeardsmobile.taskapp.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -24,7 +18,7 @@ import java.util.ArrayList;
 import static android.widget.AdapterView.OnItemClickListener;
 import static android.widget.AdapterView.OnItemLongClickListener;
 
-public class TaskViewer extends Fragment {
+public class TaskListFragment extends Fragment {
     public static String ARG_TASK_LIST = "ARG_TASK_LIST";
 
     private OnTaskItemSelectedListener callback;
@@ -32,12 +26,12 @@ public class TaskViewer extends Fragment {
     private ArrayList<ToDoItem> tasks;
     private TaskItemAdapter adapter;
 
-    public TaskViewer() {
+    public TaskListFragment() {
 
     }
 
-    public static TaskViewer newInstance(ArrayList<ToDoItem> tasks) {
-        TaskViewer fragment = new TaskViewer();
+    public static TaskListFragment newInstance(ArrayList<ToDoItem> tasks) {
+        TaskListFragment fragment = new TaskListFragment();
         fragment.setTasksRoot(tasks);
         return fragment;
     }
@@ -67,7 +61,7 @@ public class TaskViewer extends Fragment {
 
         if (getArguments() != null) {
         }
-        //setContentView(R.layout.activity_task_viewer);
+        //setContentView(R.layout.fragement_task_list);
     }
 
     @Override
@@ -87,7 +81,7 @@ public class TaskViewer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_task_viewer, container, false);
+        View view = inflater.inflate(R.layout.fragement_task_list, container, false);
         ListView list = (ListView) view.findViewById(R.id.task_list);
 
         // Create the adapter
@@ -116,6 +110,5 @@ public class TaskViewer extends Fragment {
 
     private void setTasksRoot(ArrayList<ToDoItem> tasksRoot) {
         tasks = tasksRoot;
-
     }
 }

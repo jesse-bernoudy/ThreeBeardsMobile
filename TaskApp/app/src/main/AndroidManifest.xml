@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.TaskViewer"/>
+        <activity android:name=".view.TaskListFragment"/>
         <activity android:name=".view.AddNewTaskView" />
         <activity android:name=".view.AddNewProjectView" />
         <activity android:name=".view.StartPage">
@@ -21,11 +21,11 @@
         <activity
             android:name=".view.ProjectDetailView"
             android:label="@string/title_activity_project_detail_view"
-            android:parentActivityName=".view.TaskViewer"
+            android:parentActivityName=".view.TaskListFragment"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.TaskViewer" />
+                android:value=".view.TaskListFragment" />
         </activity>
         <activity
             android:name=".view.ProjectEditView"
@@ -39,11 +39,11 @@
         <activity
             android:name=".view.TaskDetailView"
             android:label="@string/title_activity_task_detail_view"
-            android:parentActivityName=".view.TaskViewer"
+            android:parentActivityName=".view.TaskListFragment"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.TaskViewer" />
+                android:value=".view.TaskListFragment" />
         </activity>
         <activity
             android:name=".view.TaskEditView"

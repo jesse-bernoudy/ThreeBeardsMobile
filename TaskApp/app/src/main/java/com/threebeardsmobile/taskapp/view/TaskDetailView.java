@@ -12,12 +12,18 @@ import com.threebeardsmobile.taskapp.R;
 
 public class TaskDetailView extends AppCompatActivity {
 
+    public static String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        int[] message = intent.getIntArrayExtra(TaskDetailView.EXTRA_MESSAGE);
+        Toast.makeText(this, "Project: " + message[0] + " Task: " + message[1], Toast.LENGTH_SHORT).show();
     }
 
     @Override

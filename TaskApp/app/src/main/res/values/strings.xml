@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TaskApp</string>
+    <string name="app_name">Sisyphus</string>
     <string name="project_folder_icon_alt_text">Project Folder Icon</string>
     <string name="title_activity_project_detail_view">ProjectDetailView</string>
     <string name="title_activity_project_edit_view">ProjectEditView</string>

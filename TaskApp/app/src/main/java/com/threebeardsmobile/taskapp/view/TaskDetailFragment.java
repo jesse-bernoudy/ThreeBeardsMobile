@@ -33,6 +33,8 @@ public class TaskDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -54,20 +56,22 @@ public class TaskDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_detail_view, container, false);
 
+        TextView title = (TextView) view.findViewById(R.id.itemName);
+
+        title.setText(task.getItemName());
+
+        TextView createdBy = (TextView) view.findViewById(R.id.createdBy);
+        createdBy.setText(task.getItemName());
+
+        TextView description = (TextView) view.findViewById(R.id.itemDescription);
+        description.setText(task.getItemName());
+
         return view;
     }
 
     private void setCurrentTask(ToDoItem task) {
         this.task = task;
 
-        TextView title = (TextView) getActivity().findViewById(R.id.itemName);
-        title.setText(task.getItemName());
-
-        TextView createdBy = (TextView) getActivity().findViewById(R.id.createdBy);
-        createdBy.setText(task.getItemName());
-
-        TextView description = (TextView) getActivity().findViewById(R.id.itemDescription);
-        description.setText(task.getItemName());
 
     }
 

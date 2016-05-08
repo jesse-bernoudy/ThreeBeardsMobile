@@ -1,10 +1,9 @@
 package com.threebeardsmobile.taskapp.view;
 
-import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
@@ -13,36 +12,21 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 import java.util.ArrayList;
 
-public class StartPage extends ListActivity {
+public class StartPage extends AppCompatActivity
+        implements TaskListFragment.OnTaskItemSelectedListener, TaskDetailFragment.OnTaskDetailCallback {
     private ArrayList<ToDoItem> tasks;
-    private TaskItemAdapter adapter;
-
-    public AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // Either drill down in the list, or display the task details
-            ToDoItem selected = tasks.get(position);
-            if(selected instanceof Project) {
-                // Drill down
-                Intent intent = new Intent(StartPage.this, TaskViewer.class);
-                startActivity(intent);
-            } else {
-                // Display detail view
-            }
-        }
-    };
-
-    public AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            return false;
-        }
-    };
+    private int projectIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         //ToDo: Replace with root TaskBase list instance from Controller
         tasks = new ArrayList<>();
@@ -63,12 +47,72 @@ public class StartPage extends ListActivity {
             tasks.add(t);
         }
 
-        // Create the adapter
-        adapter = new TaskItemAdapter(this, tasks);
-        setListAdapter(adapter);
+        showTaskViewer(tasks);
+    }
 
-        // Register click listeners for when an item is clicked or long clicked
-        getListView().setOnItemClickListener(itemClickListener);
-        getListView().setOnItemLongClickListener(itemLongClickListener);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return true;
+//            case R.id.edit_button:
+//                startActivity(new Intent(getApplicationContext(), TaskEditFragment.class));
+//                return true;
+//            case R.id.delete_button:
+//                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showTaskViewer(ArrayList<ToDoItem> root) {
+        TaskListFragment newFragment = TaskListFragment.newInstance(root);
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void showTaskDetails(ToDoItem task) {
+        TaskDetailFragment newFragment = TaskDetailFragment.newInstance(task);
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void onTaskItemSelected(ArrayList<ToDoItem> list, int position) {
+        // Either drill down in the list, or display the task details
+        ToDoItem selected = tasks.get(position);
+        if(selected instanceof Project) {
+            // Drill down
+            showTaskViewer(((Project) selected).getChildItems());
+            projectIndex++;
+        } else {
+            // Display detail view
+            showTaskDetails(list.get(position));
+        }
+    }
+
+    @Override
+    public void onTaskDetailCallback() {
+
     }
 }

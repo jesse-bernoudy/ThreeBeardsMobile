@@ -1,5 +1,6 @@
 package com.threebeardsmobile.taskapp.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +27,21 @@ public class Project extends ToDoItem {
 
     public Project(JSONObject projectJSON) throws JSONException {
         super(projectJSON);
-        // // TODO: 5/1/16 Add project field assignments to this constructor
+
+        projectOwner = projectJSON.getString("CreatedBy");
+
+        JSONArray itemArray = new JSONArray(projectJSON.getJSONObject("items"));
+
+        childItems = new ArrayList<>(itemArray.length());
+
+        for (int i = 0; i < itemArray.length(); i++){
+            JSONObject jo = itemArray.getJSONObject(i);
+            if (jo.has("items")) {
+                childItems.add(new Project(itemArray.getJSONObject(i)));
+            } else {
+                childItems.add(new Task(jo));
+            }
+        }
     }
 
     public Project(String itemName, String itemDescription, String createdBy,

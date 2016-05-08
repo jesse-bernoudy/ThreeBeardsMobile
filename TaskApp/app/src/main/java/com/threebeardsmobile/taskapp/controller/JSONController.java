@@ -1,17 +1,33 @@
 package com.threebeardsmobile.taskapp.controller;
 
-import com.threebeardsmobile.taskapp.model.*;
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
+import com.threebeardsmobile.taskapp.model.Project;
+import com.threebeardsmobile.taskapp.model.Task;
+import com.threebeardsmobile.taskapp.model.ToDoItem;
+import com.threebeardsmobile.taskapp.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 
 /**
  * Created by bob on 4/24/16.
  */
 public class JSONController {
+    static final String mFile =
+            Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS) + "/user_tasks.json";
 
     private JSONController(){ /* No instantiaton */}
 
@@ -87,10 +103,49 @@ public class JSONController {
 
     }
 
-    public static User buildUserFromJson(JSONObject json){
+    public static User buildUserFromJson(Context context) throws JSONException {
+        JSONObject json = getJsonFromFile(context);
+        Log.d("", "buildUserFromJson: ");
         return  new User(json);
     }
 
+    public static JSONObject getJsonFromFile(Context context) throws JSONException {
+        InputStream is = null;
+        try {
+            is = context.openFileInput("user_tasks.json");
+        } catch (FileNotFoundException e) {
+            Log.e("#### File error ####", "getJsonFromFile: FAILED");
 
+        }
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            String line = br.readLine();
+            while (line != null){
+                Log.d("####$$$####", line);
+                stringBuilder.append(line);
+                line = br.readLine();
+            }
+            return new JSONObject(stringBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static boolean writeJsonToFile(Context context, JSONObject userJson) throws IOException {
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("user_tasks.json", Context.MODE_PRIVATE));
+            osw.write(userJson.toString());
+            osw.append("{}");
+            osw.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

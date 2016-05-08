@@ -1,5 +1,6 @@
 package com.threebeardsmobile.taskapp.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +27,21 @@ public class Project extends ToDoItem {
 
     public Project(JSONObject projectJSON) throws JSONException {
         super(projectJSON);
-        // // TODO: 5/1/16  
+
+        projectOwner = projectJSON.getString("AssignedTo");
+
+        JSONArray itemArray = new JSONArray(projectJSON.getJSONObject("items"));
+
+        childItems = new ArrayList<>(itemArray.length());
+
+        for (int i = 0; i < itemArray.length(); i++){
+            JSONObject jo = itemArray.getJSONObject(i);
+            if (jo.has("items")) {
+                childItems.add(new Project(itemArray.getJSONObject(i)));
+            } else {
+                childItems.add(new Task(jo));
+            }
+        }
     }
 
     public Project(String itemName, String itemDescription, String createdBy,
@@ -40,7 +55,7 @@ public class Project extends ToDoItem {
 
     //Percent complete method
     public double getPercentComplete() {
-        //stub // TODO: 4/24/16  
+        //stub // TODO: 4/24/16  Low Priority - get percentage complete
         return 0.0;
     }
 

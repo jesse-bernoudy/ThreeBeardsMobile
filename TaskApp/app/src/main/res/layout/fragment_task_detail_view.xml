@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,44 +10,112 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Title:" />
+        android:text="Title:"
+        android:id="@+id/itemNameTitle"
+        android:layout_marginTop="98dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="This is for the Title"
+        android:layout_alignBottom="@+id/itemNameTitle"
+        android:layout_above="@+id/progressBar"
+        android:layout_toEndOf="@+id/itemNameTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Createdy By:"
+        android:id="@+id/createdByTitle"
+        android:layout_below="@+id/itemNameTitle"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="This is for the owner"
+        android:layout_alignTop="@+id/createdByTitle"
+        android:layout_toEndOf="@+id/createdByTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Task Progress:"
+        android:id="@+id/taskProgressTitle"
+        android:layout_below="@+id/itemDescriptionTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignTop="@+id/taskProgressTitle"
+        android:layout_toEndOf="@+id/taskProgressTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Item Description:"
+        android:id="@+id/itemDescriptionTitle"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/createdByTitle"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/itemDescriptionTitle"
+        android:layout_toEndOf="@+id/itemDescriptionTitle" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Owner:"
-        android:id="@+id/project_owner"
-        android:layout_marginTop="38dp" />
+        android:text="Category:"
+        android:id="@+id/categoryTitle"
+        android:layout_below="@id/taskProgressTitle"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-         />
+        android:text="Medium Text"
+        android:id="@+id/category"
+        android:layout_alignTop="@+id/categoryTitle"
+        android:layout_toEndOf="@+id/categoryTitle" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Date Added:"
+        android:id="@+id/dateAddedTitle"
+        android:layout_below="@id/categoryTitle"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Task Progress:" />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Task Description:" />
-
-</LinearLayout>
+        android:text="Medium Text"
+        android:id="@+id/dateAdded"
+        android:layout_alignTop="@+id/dateAddedTitle"
+        android:layout_toEndOf="@+id/dateAddedTitle" />
+</RelativeLayout>

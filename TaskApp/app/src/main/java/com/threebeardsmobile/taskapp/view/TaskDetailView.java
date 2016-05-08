@@ -1,50 +1,63 @@
 package com.threebeardsmobile.taskapp.view;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.threebeardsmobile.taskapp.R;
+import com.threebeardsmobile.taskapp.model.ToDoItem;
 
-public class TaskDetailView extends AppCompatActivity {
+public class TaskDetailView extends Fragment {
 
-    public static String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+    private OnTaskDetailViewListener callback;
+    private ToDoItem task;
+
+    public TaskDetailView() {
+    }
+
+    public static TaskDetailView newInstance(ToDoItem task) {
+        TaskDetailView fragment = new TaskDetailView();
+        fragment.setCurrentTask(task);
+        return fragment;
+    }
+
+    // Container Activity must implement this interface
+    public interface OnTaskDetailViewListener {
+        public void onTaskDetailViewChanged();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        Intent intent = getIntent();
-        int[] message = intent.getIntArrayExtra(TaskDetailView.EXTRA_MESSAGE);
-        Toast.makeText(this, "Project: " + message[0] + " Task: " + message[1], Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_project_detail_view, menu);
-        return true;
-    }
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.back_arrow:
-                Toast.makeText(this, "Back Arrow", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.edit_button:
-                startActivity(new Intent(getApplicationContext(), TaskEditView.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            callback = (OnTaskDetailViewListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTaskItemSelectedListener");
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_task_detail_view, container, false);
+
+        return view;
+    }
+
+    private void setCurrentTask(ToDoItem task) {
+        this.task = task;
     }
 
 }

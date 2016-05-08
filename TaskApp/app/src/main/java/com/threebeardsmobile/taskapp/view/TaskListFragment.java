@@ -61,7 +61,6 @@ public class TaskListFragment extends Fragment {
 
         if (getArguments() != null) {
         }
-        //setContentView(R.layout.fragement_task_list);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragement_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         ListView list = (ListView) view.findViewById(R.id.task_list);
 
         // Create the adapter
@@ -94,17 +93,7 @@ public class TaskListFragment extends Fragment {
 
         Button detailsButton = (Button) view.findViewById(R.id.details_button);
         detailsButton.setText("Test");
-        // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-//            RecyclerView recyclerView = (RecyclerView) view;
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
-//            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-//        }
+
         return view;
     }
 

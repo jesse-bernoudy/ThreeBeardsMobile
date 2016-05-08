@@ -56,13 +56,11 @@ public class StartPage extends AppCompatActivity implements TaskListFragment.OnT
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                projectIndex--;
-                return true;
-            case R.id.back_arrow:
-                Toast.makeText(this, "Back Arrow", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.edit_button:
                 startActivity(new Intent(getApplicationContext(), TaskEditView.class));
+                return true;
+            case R.id.delete_button:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

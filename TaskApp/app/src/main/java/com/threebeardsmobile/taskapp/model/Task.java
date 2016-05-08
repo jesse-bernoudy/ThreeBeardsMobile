@@ -12,6 +12,8 @@ public class Task extends ToDoItem {
 
     String assignedTo;
 
+    boolean isComplete;
+
     public String getAssignedTo() {
         return assignedTo;
     }
@@ -27,6 +29,7 @@ public class Task extends ToDoItem {
     public Task(JSONObject projectJson) throws JSONException {
         super(projectJson);
         assignedTo = (String) projectJson.get("assignedTo");
+        isComplete = projectJson.getBoolean("isComplete");
     }
 
     public Task( String itemName, String itemDescription, String createdBy,
@@ -34,5 +37,17 @@ public class Task extends ToDoItem {
     {
         super( itemName, itemDescription, createdBy, category, dateAdded, dueDate, priority);
         this.assignedTo = assignedTo;
+        isComplete = false;
     }
+
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
+
+
 }

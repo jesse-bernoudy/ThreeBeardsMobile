@@ -44,7 +44,7 @@ public class TaskDetailFragment extends Fragment {
             callback = (OnTaskDetailCallback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnTaskItemSelectedListener");
+                    + " must implement OnTaskItemFragmentListener");
         }
     }
 

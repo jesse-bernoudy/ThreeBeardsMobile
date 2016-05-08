@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.threebeardsmobile.taskapp.R;
+import com.threebeardsmobile.taskapp.model.Project;
 import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 import java.util.ArrayList;
@@ -19,9 +20,18 @@ import static android.widget.AdapterView.OnItemClickListener;
 import static android.widget.AdapterView.OnItemLongClickListener;
 
 public class TaskListFragment extends Fragment {
-    public static String ARG_TASK_LIST = "ARG_TASK_LIST";
 
-    private OnTaskItemSelectedListener callback;
+    private OnTaskItemFragmentListener callback;
+
+    private Project root;
+    public Project getRoot() {
+        return root;
+    }
+
+    private boolean showProjectDetailsButton;
+    public void setShowProjectDetailsButton(boolean value) {
+        this.showProjectDetailsButton = value;
+    }
 
     private ArrayList<ToDoItem> tasks;
     private TaskItemAdapter adapter;
@@ -29,15 +39,17 @@ public class TaskListFragment extends Fragment {
     public TaskListFragment() {
     }
 
-    public static TaskListFragment newInstance(ArrayList<ToDoItem> tasks) {
+    public static TaskListFragment newInstance(Project project, boolean isRoot) {
         TaskListFragment fragment = new TaskListFragment();
-        fragment.setTasksRoot(tasks);
+        fragment.setTasksRoot(project);
+        fragment.setShowProjectDetailsButton(!isRoot);
         return fragment;
     }
 
     // Container Activity must implement this interface
-    public interface OnTaskItemSelectedListener {
-        public void onTaskItemSelected(ArrayList<ToDoItem> list, int position);
+    public interface OnTaskItemFragmentListener {
+        void onTaskItemSelected(ArrayList<ToDoItem> list, int position);
+        void onProjectDetailSelected(Project project);
     }
 
     public OnItemClickListener itemClickListener = new OnItemClickListener() {
@@ -47,19 +59,16 @@ public class TaskListFragment extends Fragment {
         }
     };
 
-    public OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
+    public View.OnClickListener projectDetailsButtonListener = new View.OnClickListener() {
         @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            return false;
+        public void onClick(View view) {
+            callback.onProjectDetailSelected(root);
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -69,10 +78,10 @@ public class TaskListFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnTaskItemSelectedListener) activity;
+            callback = (OnTaskItemFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnTaskItemSelectedListener");
+                    + " must implement OnTaskItemFragmentListener");
         }
     }
 
@@ -88,15 +97,21 @@ public class TaskListFragment extends Fragment {
 
         // Register click listeners for when an item is clicked or long clicked
         list.setOnItemClickListener(itemClickListener);
-        list.setOnItemLongClickListener(itemLongClickListener);
 
         Button detailsButton = (Button) view.findViewById(R.id.details_button);
-        detailsButton.setText("Test");
+        detailsButton.setOnClickListener(projectDetailsButtonListener);
+        if(showProjectDetailsButton) {
+            detailsButton.setText("Test");
+            detailsButton.setVisibility(View.VISIBLE);
+        } else {
+            detailsButton.setVisibility(View.GONE);
+        }
 
         return view;
     }
 
-    private void setTasksRoot(ArrayList<ToDoItem> tasksRoot) {
-        tasks = tasksRoot;
+    private void setTasksRoot(Project project) {
+        root = project;
+        tasks = project.getChildItems();
     }
 }

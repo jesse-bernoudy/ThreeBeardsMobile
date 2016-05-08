@@ -7,12 +7,14 @@
 
     <Button
         android:id="@+id/details_button"
+        style="?android:borderlessButtonStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Project Name"
         android:gravity="fill_horizontal"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="16dp"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/task_list"

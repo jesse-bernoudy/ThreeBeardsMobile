@@ -3,15 +3,22 @@ package com.threebeardsmobile.taskapp.view;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.threebeardsmobile.taskapp.R;
+import com.threebeardsmobile.taskapp.controller.JSONController;
 import com.threebeardsmobile.taskapp.model.Project;
 import com.threebeardsmobile.taskapp.model.Task;
 import com.threebeardsmobile.taskapp.model.ToDoItem;
+import com.threebeardsmobile.taskapp.model.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.widget.AdapterView.OnItemClickListener;
@@ -48,6 +55,18 @@ public class TaskViewer extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_viewer);
+
+        try {
+            User u = new User(8675309, "User McUser");
+            JSONObject jo2 = JSONController.getJsonFromUser(u);
+            JSONController.writeJsonToFile(getApplicationContext(), jo2);
+            JSONObject jo = JSONController.getJsonFromFile(getApplicationContext());
+            Log.d("Bob - io test -------", jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         //ToDo: Replace with root TaskBase list instance from Controller
         tasks = new ArrayList<>();

@@ -109,7 +109,8 @@ public class JSONController {
 
     }
 
-    public static User buildUserFromJson(JSONObject json){
+    public static User buildUserFromJson(Context context) throws JSONException {
+        JSONObject json = getJsonFromFile(context);
         Log.d("", "buildUserFromJson: ");
         return  new User(json);
     }
@@ -138,41 +139,19 @@ public class JSONController {
         }
 
         return null;
-//        // Check if file exists
-//        File jsonFile = new File(mFile);
-//        StringBuffer json = new StringBuffer();
-//        try {
-//            //Normal operation - Scan JSON file from disk to string,
-//            // return new JSONObject
-//            Scanner scan = new Scanner(jsonFile);
-//            while (scan.hasNext()){
-//                json.append(scan.next());
-//            }
-//            return new JSONObject(String.valueOf(json));
-//
-//        } catch (FileNotFoundException e) {
-//            json.delete(0, json.length());
-//            json.append("{}");
-//            return new JSONObject(String.valueOf(json));
-//        }
     }
 
     public static boolean writeJsonToFile(Context context, JSONObject userJson) throws IOException {
-        OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("user_tasks.json", Context.MODE_PRIVATE));
-        osw.write(userJson.toString());
-        osw.append("{}");
-        osw.close();
-        return true;
-
-//        try {
-//            FileWriter jsonWrite = new FileWriter(mFile, false);
-//            jsonWrite.write(String.valueOf(userJson));
-//            jsonWrite.close();
-//            return true;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("user_tasks.json", Context.MODE_PRIVATE));
+            osw.write(userJson.toString());
+            osw.append("{}");
+            osw.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

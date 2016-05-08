@@ -10,23 +10,23 @@ import android.view.ViewGroup;
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.ToDoItem;
 
-public class TaskDetailView extends Fragment {
+public class TaskDetailFragment extends Fragment {
 
-    private OnTaskDetailViewListener callback;
+    private OnTaskDetailCallback callback;
     private ToDoItem task;
 
-    public TaskDetailView() {
+    public TaskDetailFragment() {
     }
 
-    public static TaskDetailView newInstance(ToDoItem task) {
-        TaskDetailView fragment = new TaskDetailView();
+    public static TaskDetailFragment newInstance(ToDoItem task) {
+        TaskDetailFragment fragment = new TaskDetailFragment();
         fragment.setCurrentTask(task);
         return fragment;
     }
 
     // Container Activity must implement this interface
-    public interface OnTaskDetailViewListener {
-        public void onTaskDetailViewChanged();
+    public interface OnTaskDetailCallback {
+        public void onTaskDetailCallback();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class TaskDetailView extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnTaskDetailViewListener) activity;
+            callback = (OnTaskDetailCallback) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnTaskItemSelectedListener");

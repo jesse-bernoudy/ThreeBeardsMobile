@@ -27,7 +27,6 @@ public class TaskListFragment extends Fragment {
     private TaskItemAdapter adapter;
 
     public TaskListFragment() {
-
     }
 
     public static TaskListFragment newInstance(ArrayList<ToDoItem> tasks) {

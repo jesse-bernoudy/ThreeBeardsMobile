@@ -1,12 +1,9 @@
 package com.threebeardsmobile.taskapp.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
@@ -15,7 +12,8 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 import java.util.ArrayList;
 
-public class StartPage extends AppCompatActivity implements TaskListFragment.OnTaskItemSelectedListener {
+public class StartPage extends AppCompatActivity
+        implements TaskListFragment.OnTaskItemSelectedListener, TaskDetailFragment.OnTaskDetailCallback {
     private ArrayList<ToDoItem> tasks;
     private int projectIndex = 0;
 
@@ -57,11 +55,11 @@ public class StartPage extends AppCompatActivity implements TaskListFragment.OnT
         switch (item.getItemId()) {
             case android.R.id.home:
                 return true;
-            case R.id.edit_button:
-                startActivity(new Intent(getApplicationContext(), TaskEditView.class));
-                return true;
-            case R.id.delete_button:
-                return true;
+//            case R.id.edit_button:
+//                startActivity(new Intent(getApplicationContext(), TaskEditFragment.class));
+//                return true;
+//            case R.id.delete_button:
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -69,6 +67,22 @@ public class StartPage extends AppCompatActivity implements TaskListFragment.OnT
 
     private void showTaskViewer(ArrayList<ToDoItem> root) {
         TaskListFragment newFragment = TaskListFragment.newInstance(root);
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void showTaskDetails(ToDoItem task) {
+        TaskDetailFragment newFragment = TaskDetailFragment.newInstance(task);
         Bundle args = new Bundle();
         newFragment.setArguments(args);
 
@@ -93,9 +107,12 @@ public class StartPage extends AppCompatActivity implements TaskListFragment.OnT
             projectIndex++;
         } else {
             // Display detail view
-            Intent intent = new Intent(this, TaskDetailView.class);
-            intent.putExtra(TaskDetailView.EXTRA_MESSAGE, new int[] {projectIndex, position});
-            startActivity(intent);
+            showTaskDetails(list.get(position));
         }
+    }
+
+    @Override
+    public void onTaskDetailCallback() {
+
     }
 }

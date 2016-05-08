@@ -7,52 +7,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".view.TaskViewer"/>
-        <activity android:name=".view.AddNewTaskView" />
-        <activity android:name=".view.AddNewProjectView" />
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".view.StartPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.ProjectDetailView"
-            android:label="@string/title_activity_project_detail_view"
-            android:parentActivityName=".view.TaskViewer"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.TaskViewer" />
-        </activity>
-        <activity
-            android:name=".view.ProjectEditView"
-            android:label="@string/title_activity_project_edit_view"
-            android:parentActivityName=".view.ProjectDetailView"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.ProjectDetailView" />
-        </activity>
-        <activity
-            android:name=".view.TaskDetailView"
-            android:label="@string/title_activity_task_detail_view"
-            android:parentActivityName=".view.TaskViewer"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.TaskViewer" />
-        </activity>
-        <activity
-            android:name=".view.TaskEditView"
-            android:label="@string/title_activity_task_edit_view"
-            android:parentActivityName=".view.TaskDetailView"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.threebeardsmobile.taskapp.view.TaskDetailView" />
         </activity>
     </application>
 

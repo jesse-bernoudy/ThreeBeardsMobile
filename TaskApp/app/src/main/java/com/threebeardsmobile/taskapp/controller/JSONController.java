@@ -1,30 +1,24 @@
 package com.threebeardsmobile.taskapp.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import com.threebeardsmobile.taskapp.model.*;
+import com.threebeardsmobile.taskapp.model.Project;
+import com.threebeardsmobile.taskapp.model.Task;
+import com.threebeardsmobile.taskapp.model.ToDoItem;
+import com.threebeardsmobile.taskapp.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 /**

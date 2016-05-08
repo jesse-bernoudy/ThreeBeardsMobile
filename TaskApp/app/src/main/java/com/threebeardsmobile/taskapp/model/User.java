@@ -7,7 +7,6 @@ import com.threebeardsmobile.taskapp.controller.JSONController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**

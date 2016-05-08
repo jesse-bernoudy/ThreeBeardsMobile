@@ -28,7 +28,7 @@ public class Project extends ToDoItem {
     public Project(JSONObject projectJSON) throws JSONException {
         super(projectJSON);
 
-        projectOwner = projectJSON.getString("CreatedBy");
+        projectOwner = projectJSON.getString("AssignedTo");
 
         JSONArray itemArray = new JSONArray(projectJSON.getJSONObject("items"));
 

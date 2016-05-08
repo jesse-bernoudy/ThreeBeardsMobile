@@ -94,6 +94,7 @@ public class JSONController {
             taskJson.put("dueDate", task.getDueDate());
             taskJson.put("assignedTo", task.getAssignedTo());
             taskJson.put("priority", task.getPriority());
+            taskJson.put("isComplete", task.isComplete());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -53,10 +53,34 @@ public class Project extends ToDoItem {
         this.parentProject = parentProject;
     }
 
-    //Percent complete method
-    public double getPercentComplete() {
-        //stub // TODO: 4/24/16  Low Priority - get percentage complete
-        return 0.0;
+    public String getPercentComplete() {
+        int[] completeAndTotalTasks = getTaskCount(this);
+
+        double percentage = (double)completeAndTotalTasks[0]/completeAndTotalTasks[1]*100;
+
+        return String.format("%.0f%%",percentage);
+
+    }
+
+    private int[] getTaskCount(Project p){
+        //count tasks throughout project and all sub projects and return
+        // completed tasks / total tasks formatted as XX.X%
+
+        // index 0 for tasks completed, index 1 for total tasks
+        int[] taskCount = {0,0};
+        for (ToDoItem tdi : p.getChildItems()){
+            if (tdi instanceof Task){
+                taskCount[1]++;
+                if ( ((Task)tdi).isComplete() ) {
+                    taskCount[0]++;
+                }
+            } else {
+                int[] childCount = getTaskCount((Project)tdi);
+                taskCount[0] += childCount[0];
+                taskCount[1] += childCount[1];
+            }
+        }
+        return taskCount;
     }
 
     public Project getParentProject() {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.ToDoItem;
@@ -58,6 +59,16 @@ public class TaskDetailFragment extends Fragment {
 
     private void setCurrentTask(ToDoItem task) {
         this.task = task;
+
+        TextView title = (TextView) getActivity().findViewById(R.id.itemName);
+        title.setText(task.getItemName());
+
+        TextView createdBy = (TextView) getActivity().findViewById(R.id.createdBy);
+        createdBy.setText(task.getItemName());
+
+        TextView description = (TextView) getActivity().findViewById(R.id.itemDescription);
+        description.setText(task.getItemName());
+
     }
 
 }

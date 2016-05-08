@@ -100,7 +100,7 @@
         android:id="@+id/category"
         android:layout_alignTop="@+id/categoryTitle"
         android:layout_toEndOf="@+id/categoryTitle" />
-    
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

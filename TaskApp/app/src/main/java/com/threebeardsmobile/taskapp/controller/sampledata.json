@@ -39,7 +39,8 @@
 							"dateCreated": "04/24/2016",
 							"dueDate": "04/27/2016",
 							"assignedTo": "User McUser",
-							"priority":3
+							"priority":3,
+							"isComplete": false
 						}
 					]
 			},{
@@ -52,7 +53,8 @@
 				"dateCreated": "04/24/2016",
 				"dueDate": "04/27/2016",
 				"assignedTo": "User McUser",
-				"priority":3
+				"priority":3,
+				"isComplete": true
 			}
 		]
 	}

@@ -14,6 +14,11 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 public class TaskDetailFragment extends Fragment {
 
     private OnTaskDetailFragmentListener callback;
+
+    public ToDoItem getTask() {
+        return task;
+    }
+
     private ToDoItem task;
 
     public TaskDetailFragment() {
@@ -58,10 +63,10 @@ public class TaskDetailFragment extends Fragment {
         title.setText(task.getItemName());
 
         TextView createdBy = (TextView) view.findViewById(R.id.createdBy);
-        createdBy.setText(task.getItemName());
+        createdBy.setText(task.getCreatedBy());
 
         TextView description = (TextView) view.findViewById(R.id.itemDescription);
-        description.setText(task.getItemName());
+        description.setText(task.getItemDescription());
 
         return view;
     }

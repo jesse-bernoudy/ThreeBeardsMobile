@@ -37,13 +37,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp" />
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/project_members" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +83,7 @@
         android:text="Medium Text"
         android:id="@+id/textView4"
         android:layout_alignBottom="@+id/project_members"
-        android:layout_toEndOf="@+id/progressBar" />
+        android:layout_toEndOf="@+id/project_members" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,7 +92,7 @@
         android:text="Medium Text"
         android:id="@+id/textView5"
         android:layout_alignBottom="@+id/project_progress"
-        android:layout_toEndOf="@+id/progressBar" />
+        android:layout_toEndOf="@+id/project_members" />
 
     <TextView
         android:layout_width="wrap_content"

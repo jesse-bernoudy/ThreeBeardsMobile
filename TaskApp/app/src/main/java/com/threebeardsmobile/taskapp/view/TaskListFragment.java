@@ -17,15 +17,14 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 import java.util.ArrayList;
 
 import static android.widget.AdapterView.OnItemClickListener;
-import static android.widget.AdapterView.OnItemLongClickListener;
 
 public class TaskListFragment extends Fragment {
 
     private OnTaskItemFragmentListener callback;
 
-    private Project root;
-    public Project getRoot() {
-        return root;
+    private Project project;
+    public Project getProject() {
+        return project;
     }
 
     private boolean showProjectDetailsButton;
@@ -62,7 +61,7 @@ public class TaskListFragment extends Fragment {
     public View.OnClickListener projectDetailsButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            callback.onProjectDetailSelected(root);
+            callback.onProjectDetailSelected(project);
         }
     };
 
@@ -101,7 +100,7 @@ public class TaskListFragment extends Fragment {
         Button detailsButton = (Button) view.findViewById(R.id.details_button);
         detailsButton.setOnClickListener(projectDetailsButtonListener);
         if(showProjectDetailsButton) {
-            detailsButton.setText("Test");
+            detailsButton.setText(project.getItemName());
             detailsButton.setVisibility(View.VISIBLE);
         } else {
             detailsButton.setVisibility(View.GONE);
@@ -111,7 +110,7 @@ public class TaskListFragment extends Fragment {
     }
 
     private void setTasksRoot(Project project) {
-        root = project;
+        this.project = project;
         tasks = project.getChildItems();
     }
 }

@@ -20,15 +20,19 @@ public class User {
 //    long lastProjectId; // Superfluous
 
 
-    public static User getCurrentUser(Context context) throws JSONException {
+    public static User getCurrentUser(Context context) {
         if (currentUser != null) {
             return currentUser;
         } else {
-            JSONObject userJson = JSONController.getJsonFromFile(context);
-            if (userJson != null){
-                return currentUser = new User(userJson);
-            } else {
-                return (currentUser = new User(0,"User Name"));
+            try {
+                JSONObject userJson = JSONController.getJsonFromFile(context);
+                if (userJson != null) {
+                    return currentUser = new User(userJson);
+                } else {
+                    return (currentUser = new User(0, "User Name"));
+                }
+            } catch (JSONException ex) {
+                return (currentUser = new User(0, "User Name"));
             }
         }
     }

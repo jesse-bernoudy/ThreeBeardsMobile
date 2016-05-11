@@ -13,7 +13,7 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 public class TaskDetailFragment extends Fragment {
 
-    private OnTaskDetailCallback callback;
+    private OnTaskDetailFragmentListener callback;
     private ToDoItem task;
 
     public TaskDetailFragment() {
@@ -26,15 +26,12 @@ public class TaskDetailFragment extends Fragment {
     }
 
     // Container Activity must implement this interface
-    public interface OnTaskDetailCallback {
-        public void onTaskDetailCallback();
+    public interface OnTaskDetailFragmentListener {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -44,7 +41,7 @@ public class TaskDetailFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnTaskDetailCallback) activity;
+            callback = (OnTaskDetailFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnTaskItemFragmentListener");
@@ -71,8 +68,6 @@ public class TaskDetailFragment extends Fragment {
 
     private void setCurrentTask(ToDoItem task) {
         this.task = task;
-
-
     }
 
 }

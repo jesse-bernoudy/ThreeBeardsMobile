@@ -1,24 +1,18 @@
 package com.threebeardsmobile.taskapp.view;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
-import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 public class ProjectDetailFragment extends Fragment {
 
-    private OnProjectDetailCallback callback;
+    private OnProjectDetailFragmentListener callback;
     private Project project;
 
     public ProjectDetailFragment() {
@@ -31,8 +25,7 @@ public class ProjectDetailFragment extends Fragment {
     }
 
     // Container Activity must implement this interface
-    public interface OnProjectDetailCallback {
-        public void onProjectDetailCallback();
+    public interface OnProjectDetailFragmentListener {
     }
 
     @Override
@@ -47,7 +40,7 @@ public class ProjectDetailFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnProjectDetailCallback) activity;
+            callback = (OnProjectDetailFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnProjectItemFragmentListener");

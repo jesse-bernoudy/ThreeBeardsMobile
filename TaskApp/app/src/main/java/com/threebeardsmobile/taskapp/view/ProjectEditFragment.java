@@ -13,7 +13,7 @@ import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
 
 public class ProjectEditFragment extends Fragment {
-    private OnProjectEditCallback callback;
+    private OnProjectEditFragmentListener callback;
     private Project project;
 
     public ProjectEditFragment() {
@@ -26,7 +26,7 @@ public class ProjectEditFragment extends Fragment {
     }
 
     // Container Activity must implement this interface
-    public interface OnProjectEditCallback {
+    public interface OnProjectEditFragmentListener {
         public void onProjectEditCallback();
     }
 
@@ -42,7 +42,7 @@ public class ProjectEditFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnProjectEditCallback) activity;
+            callback = (OnProjectEditFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnProjectItemFragmentListener");

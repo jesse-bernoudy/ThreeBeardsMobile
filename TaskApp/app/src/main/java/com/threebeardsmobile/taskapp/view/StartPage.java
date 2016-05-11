@@ -1,15 +1,12 @@
 package com.threebeardsmobile.taskapp.view;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.threebeardsmobile.taskapp.R;
 import com.threebeardsmobile.taskapp.model.Project;
@@ -21,12 +18,22 @@ import java.util.ArrayList;
 
 public class StartPage extends AppCompatActivity
         implements TaskListFragment.OnTaskItemFragmentListener,
-            TaskDetailFragment.OnTaskDetailCallback,
-            ProjectDetailFragment.OnProjectDetailCallback {
+        TaskDetailFragment.OnTaskDetailFragmentListener,
+        ProjectDetailFragment.OnProjectDetailFragmentListener {
 
     private User user;
     private TaskListFragment currentTaskListFragment;
     private TaskDetailFragment currentTaskDetailFragment;
+    private TaskEditFragment currentTaskEditFragment;
+    private ProjectDetailFragment currentProjectDetailFragment;
+    private ProjectEditFragment currentProjectEditFragment;
+
+    private Fragment currentFragment;
+
+    private MenuItem editButton;
+    private MenuItem saveButton;
+    private MenuItem deleteButton;
+    private MenuItem cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,34 +42,25 @@ public class StartPage extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        //ToDo: Call the static contructor, currently crashes.
+        user = new User(0, "Beardy McBeardface");
 
-        //ToDo: Replace with root TaskBase list instance from Controller
-        user = new User(0, "Test User");
         Project rootProject = user.getRootProject();
         ArrayList<ToDoItem> task = rootProject.getChildItems();
         Project p = new Project();
-        p.setItemName("Test Project");
-        p.setItemDescription("This is a test project");
+        p.setItemName("Task App UI");
+        p.setItemDescription("Get the UI working");
         for (int i = 0; i < 25; i++) {
             Task t = new Task();
-            t.setItemName("Test Task" + i);
-            t.setItemDescription("This is a test task");
+            t.setItemName("Add UI item " + i);
+            t.setItemDescription("Add this cool UI item");
             p.getChildItems().add(t);
         }
         task.add(p);
         for (int i = 0; i < 25; i++) {
             Task t = new Task();
-            t.setItemName("Test Task" + i);
-            t.setItemDescription("This is a test task");
+            t.setItemName("Test Task App feature " + i);
+            t.setItemDescription("Make sure to test this feature");
             task.add(t);
         }
         showTaskViewer(rootProject, true);
@@ -72,6 +70,17 @@ public class StartPage extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        editButton = menu.findItem(R.id.editButton);
+        saveButton = menu.findItem(R.id.saveButton);
+        deleteButton = menu.findItem(R.id.deleteButton);
+        cancelButton = menu.findItem(R.id.cancelButton);
+
+        editButton.setVisible(false);
+        saveButton.setVisible(false);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(false);
+
         return true;
     }
 
@@ -85,11 +94,14 @@ public class StartPage extends AppCompatActivity
                 return true;
             case R.id.newTaskButton:
                 return true;
-//            case R.id.edit_button:
-//                startActivity(new Intent(getApplicationContext(), TaskEditFragment.class));
-//                return true;
-//            case R.id.delete_button:
-//                return true;
+            case R.id.editButton:
+                return true;
+            case R.id.saveButton:
+                return true;
+            case R.id.deleteButton:
+                return true;
+            case R.id.cancelButton:
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -105,16 +117,17 @@ public class StartPage extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment);
-        if(!isRoot) {
+        if (!isRoot) {
             transaction.addToBackStack(null);
         }
+
 
         // Commit the transaction
         transaction.commit();
     }
 
     private void showTaskDetails(ToDoItem task) {
-        TaskDetailFragment newFragment = TaskDetailFragment.newInstance(task);
+        TaskDetailFragment newFragment = currentTaskDetailFragment = TaskDetailFragment.newInstance(task);
         Bundle args = new Bundle();
         newFragment.setArguments(args);
 
@@ -124,6 +137,11 @@ public class StartPage extends AppCompatActivity
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment);
         transaction.addToBackStack(null);
+
+        editButton.setVisible(true);
+        saveButton.setVisible(false);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(false);
 
         // Commit the transaction
         transaction.commit();
@@ -131,7 +149,7 @@ public class StartPage extends AppCompatActivity
 
 
     private void showProjectDetails(Project project) {
-        ProjectDetailFragment newFragment = ProjectDetailFragment.newInstance(project);
+        ProjectDetailFragment newFragment = currentProjectDetailFragment = ProjectDetailFragment.newInstance(project);
         Bundle args = new Bundle();
         newFragment.setArguments(args);
 
@@ -141,6 +159,11 @@ public class StartPage extends AppCompatActivity
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment);
         transaction.addToBackStack(null);
+
+        editButton.setVisible(true);
+        saveButton.setVisible(false);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(false);
 
         // Commit the transaction
         transaction.commit();
@@ -170,11 +193,6 @@ public class StartPage extends AppCompatActivity
         showProjectDetails(project);
     }
 
-
-    @Override
-    public void onTaskDetailCallback() {
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -188,10 +206,13 @@ public class StartPage extends AppCompatActivity
             }
         }
 
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (f instanceof TaskListFragment) {
+            editButton.setVisible(false);
+            saveButton.setVisible(false);
+            deleteButton.setVisible(false);
+            cancelButton.setVisible(false);
+        }
     }
 
-    @Override
-    public void onProjectDetailCallback() {
-
-    }
 }

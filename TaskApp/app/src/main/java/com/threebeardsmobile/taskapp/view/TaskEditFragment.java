@@ -14,7 +14,7 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 
 public class TaskEditFragment extends Fragment {
 
-    private OnTaskEditCallback callback;
+    private OnTaskEditFragmentListener callback;
     private ToDoItem task;
 
     public TaskEditFragment() {
@@ -27,8 +27,7 @@ public class TaskEditFragment extends Fragment {
     }
 
     // Container Activity must implement this interface
-    public interface OnTaskEditCallback {
-        public void onTaskEditCallback();
+    public interface OnTaskEditFragmentListener {
     }
 
     @Override
@@ -43,7 +42,7 @@ public class TaskEditFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnTaskEditCallback) activity;
+            callback = (OnTaskEditFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnTaskItemFragmentListener");

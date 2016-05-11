@@ -1,5 +1,6 @@
 package com.threebeardsmobile.taskapp.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +27,21 @@ public class Project extends ToDoItem {
 
     public Project(JSONObject projectJSON) throws JSONException {
         super(projectJSON);
-        // // TODO: 5/1/16 Add project field assignments to this constructor
+
+        projectOwner = projectJSON.getString("AssignedTo");
+
+        JSONArray itemArray = new JSONArray(projectJSON.getJSONObject("items"));
+
+        childItems = new ArrayList<>(itemArray.length());
+
+        for (int i = 0; i < itemArray.length(); i++){
+            JSONObject jo = itemArray.getJSONObject(i);
+            if (jo.has("items")) {
+                childItems.add(new Project(itemArray.getJSONObject(i)));
+            } else {
+                childItems.add(new Task(jo));
+            }
+        }
     }
 
     public Project(String itemName, String itemDescription, String createdBy,
@@ -38,10 +53,34 @@ public class Project extends ToDoItem {
         this.parentProject = parentProject;
     }
 
-    //Percent complete method
-    public double getPercentComplete() {
-        //stub // TODO: 4/24/16  Low Priority - get percentage complete
-        return 0.0;
+    public String getPercentComplete() {
+        int[] completeAndTotalTasks = getTaskCount(this);
+
+        double percentage = (double)completeAndTotalTasks[0]/completeAndTotalTasks[1]*100;
+
+        return String.format("%.0f%%",percentage);
+
+    }
+
+    private int[] getTaskCount(Project p){
+        //count tasks throughout project and all sub projects and return
+        // completed tasks / total tasks formatted as XX.X%
+
+        // index 0 for tasks completed, index 1 for total tasks
+        int[] taskCount = {0,0};
+        for (ToDoItem tdi : p.getChildItems()){
+            if (tdi instanceof Task){
+                taskCount[1]++;
+                if ( ((Task)tdi).isComplete() ) {
+                    taskCount[0]++;
+                }
+            } else {
+                int[] childCount = getTaskCount((Project)tdi);
+                taskCount[0] += childCount[0];
+                taskCount[1] += childCount[1];
+            }
+        }
+        return taskCount;
     }
 
     public Project getParentProject() {

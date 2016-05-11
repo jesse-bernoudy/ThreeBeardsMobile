@@ -15,6 +15,11 @@ import com.threebeardsmobile.taskapp.model.ToDoItem;
 public class TaskEditFragment extends Fragment {
 
     private OnTaskEditFragmentListener callback;
+
+    public ToDoItem getTask() {
+        return task;
+    }
+
     private ToDoItem task;
 
     public TaskEditFragment() {

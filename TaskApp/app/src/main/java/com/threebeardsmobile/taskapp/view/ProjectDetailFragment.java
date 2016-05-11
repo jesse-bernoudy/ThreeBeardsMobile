@@ -13,6 +13,10 @@ import com.threebeardsmobile.taskapp.model.Project;
 public class ProjectDetailFragment extends Fragment {
 
     private OnProjectDetailFragmentListener callback;
+
+    public Project getProject() {
+        return project;
+    }
     private Project project;
 
     public ProjectDetailFragment() {

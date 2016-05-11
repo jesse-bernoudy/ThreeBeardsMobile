@@ -19,7 +19,9 @@ import java.util.ArrayList;
 public class StartPage extends AppCompatActivity
         implements TaskListFragment.OnTaskItemFragmentListener,
         TaskDetailFragment.OnTaskDetailFragmentListener,
-        ProjectDetailFragment.OnProjectDetailFragmentListener {
+        TaskEditFragment.OnTaskEditFragmentListener,
+        ProjectDetailFragment.OnProjectDetailFragmentListener,
+        ProjectEditFragment.OnProjectEditFragmentListener {
 
     private User user;
     private TaskListFragment currentTaskListFragment;
@@ -91,16 +93,41 @@ public class StartPage extends AppCompatActivity
                 onBackPressed();
                 return true;
             case R.id.newProjectButton:
+                showProjectEdit(new Project());
                 return true;
             case R.id.newTaskButton:
+                showTaskEdit(new Task());
                 return true;
-            case R.id.editButton:
+            case R.id.editButton: {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (f instanceof TaskDetailFragment) {
+                    showTaskEdit(currentTaskDetailFragment.getTask());
+                } else {
+                    showProjectEdit(currentProjectDetailFragment.getProject());
+                }
                 return true;
-            case R.id.saveButton:
+            }
+            case R.id.saveButton: {
+                Project updatedProject = currentTaskListFragment.getProject();
+
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (f instanceof TaskEditFragment) {
+                    if (!updatedProject.childItems.contains(currentTaskDetailFragment.getTask())) {
+                        updatedProject.childItems.add(currentTaskDetailFragment.getTask());
+                    }
+                } else {
+                    if (!updatedProject.childItems.contains(currentProjectDetailFragment.getProject())) {
+                        updatedProject.childItems.add(currentProjectDetailFragment.getProject());
+                    }
+                }
+                onBackPressed();
                 return true;
+            }
             case R.id.deleteButton:
+                onBackPressed();
                 return true;
             case R.id.cancelButton:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -121,7 +148,6 @@ public class StartPage extends AppCompatActivity
             transaction.addToBackStack(null);
         }
 
-
         // Commit the transaction
         transaction.commit();
     }
@@ -140,13 +166,34 @@ public class StartPage extends AppCompatActivity
 
         editButton.setVisible(true);
         saveButton.setVisible(false);
-        deleteButton.setVisible(false);
+        deleteButton.setVisible(true);
         cancelButton.setVisible(false);
 
         // Commit the transaction
         transaction.commit();
     }
 
+
+    private void showTaskEdit(ToDoItem task) {
+        TaskEditFragment newFragment = currentTaskEditFragment = TaskEditFragment.newInstance(task);
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        editButton.setVisible(false);
+        saveButton.setVisible(true);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(true);
+
+        // Commit the transaction
+        transaction.commit();
+    }
 
     private void showProjectDetails(Project project) {
         ProjectDetailFragment newFragment = currentProjectDetailFragment = ProjectDetailFragment.newInstance(project);
@@ -162,8 +209,29 @@ public class StartPage extends AppCompatActivity
 
         editButton.setVisible(true);
         saveButton.setVisible(false);
-        deleteButton.setVisible(false);
+        deleteButton.setVisible(true);
         cancelButton.setVisible(false);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void showProjectEdit(Project project) {
+        ProjectEditFragment newFragment = currentProjectEditFragment = ProjectEditFragment.newInstance(project);
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        editButton.setVisible(false);
+        saveButton.setVisible(true);
+        deleteButton.setVisible(false);
+        cancelButton.setVisible(true);
 
         // Commit the transaction
         transaction.commit();
@@ -211,6 +279,11 @@ public class StartPage extends AppCompatActivity
             editButton.setVisible(false);
             saveButton.setVisible(false);
             deleteButton.setVisible(false);
+            cancelButton.setVisible(false);
+        } else if (f instanceof TaskDetailFragment || f instanceof ProjectDetailFragment) {
+            editButton.setVisible(true);
+            saveButton.setVisible(false);
+            deleteButton.setVisible(true);
             cancelButton.setVisible(false);
         }
     }

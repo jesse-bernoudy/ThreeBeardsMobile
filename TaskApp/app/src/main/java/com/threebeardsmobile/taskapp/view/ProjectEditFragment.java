@@ -14,6 +14,11 @@ import com.threebeardsmobile.taskapp.model.Project;
 
 public class ProjectEditFragment extends Fragment {
     private OnProjectEditFragmentListener callback;
+
+    public Project getProject() {
+        return project;
+    }
+
     private Project project;
 
     public ProjectEditFragment() {
@@ -27,7 +32,6 @@ public class ProjectEditFragment extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnProjectEditFragmentListener {
-        public void onProjectEditCallback();
     }
 
     @Override

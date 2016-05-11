@@ -17,6 +17,7 @@ import java.util.ArrayList;
  * Created by Jesse on 4/23/2016.
  */
 public class TaskItemAdapter extends ArrayAdapter<ToDoItem> {
+
     public TaskItemAdapter(Context context, ArrayList<ToDoItem> users) {
         super(context, 0, users);
     }
@@ -25,14 +26,14 @@ public class TaskItemAdapter extends ArrayAdapter<ToDoItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         ToDoItem task = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            if(task instanceof Project){
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_project, parent, false);
-            }else {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_task, parent, false);
-            }
+
+        // ToDo: convertView view should be recycled, but the logic to use the right layout is not in place yet
+        if (task instanceof Project) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_project, parent, false);
+        } else {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_task, parent, false);
         }
+
         // Lookup view for data population
         TextView taskName = (TextView) convertView.findViewById(R.id.taskName);
         TextView taskDesc = (TextView) convertView.findViewById(R.id.taskDesc);

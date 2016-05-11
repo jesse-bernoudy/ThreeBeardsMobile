@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Sisyphus</string>
+    <string name="project_folder_icon_alt_text">Project Folder Icon</string>
+    <string name="title_activity_project_detail_view">ProjectDetailView</string>
+    <string name="title_activity_project_edit_view">ProjectEditView</string>
+    <string name="title_activity_task_detail_view">TaskDetailView</string>
+    <string name="title_activity_task_edit_view">TaskEditView</string>
+    <string name="back_arrow">Return</string>
+    <string name="edit_button">Edit</string>
+    <string name="save_button">Save</string>
+    <string name="delete_button">Delete</string>
+
+    <!-- Edit Labels -->
+    <string name="edit_projectName">Project Name: </string>
+    <string name="edit_projectDescription">Description: </string>
+    <string name="edit_projectCategory">Category: </string>
+    <string name="edit_projectDueDate">Due Date: </string>
+    <string name="edit_projectPriority">Priority: </string>
+</resources>

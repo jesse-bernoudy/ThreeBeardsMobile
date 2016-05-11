@@ -44,6 +44,12 @@ public class StartPage extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
+
         //ToDo: Call the static contructor, currently crashes.
         user = new User(0, "Beardy McBeardface");
 

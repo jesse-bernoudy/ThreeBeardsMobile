@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.TaskListFragment">
+
+    <Button
+        android:id="@+id/details_button"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Project Name"
+        android:gravity="fill_horizontal"
+        android:paddingBottom="16dp"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/task_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/details_button"
+        android:choiceMode="singleChoice" />
+
+</RelativeLayout>

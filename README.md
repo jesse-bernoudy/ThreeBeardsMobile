@@ -1,12 +1,17 @@
 # ThreeBeardsMobile
 
+## Projects
+[Sisyphus](https://github.com/jesse-bernoudy/ThreeBeardsMobile/tree/master/TaskApp)
+
+[FitQuest](https://github.com/jesse-bernoudy/ThreeBeardsMobile/tree/master/FitQuest)
+
 #### Git Hints
 
 Launch git bash and change into your repo director
 
 Clone the repo
 ```
-git clone https:jesse-bernoudy/ThreeBeardsMobile.git
+git clone https:jesse-bernoudy/NSC_AD340_Final.git
 ```
 Get all the branches
 ```
@@ -22,11 +27,11 @@ git checkout <branch name>
 ```
 Or create a new branch (your new branch is based on the last branch you where in, so if you want to start in unstable , then checkout unstable with the previous syntax)
 ```
-git checkout -b <new branch name> origin/<new branch name>
+git checkout -b <new branch name> origin
 ```
 If you made a new branch and didn't set the upstream at the same time you need to set an upstream with
 ```
-git branch -u origin/<new branch name>
+git branch -u origin <new branch name>
 ```
 Do your work. When ready to make a commit start with
 ```
@@ -61,7 +66,7 @@ git fetch --all
 git merge origin/unstable
 <Fix merge conflicts>
 git add <files that you fixed>
-git commit -m "Merging in Unstable"
+git commit -m "Merging from Unstable"
 git push
 ```
 If there are no merge conflicts then you can just do a push

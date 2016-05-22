@@ -1,5 +1,6 @@
 package com.threebeardsmobile.fitquest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,6 +11,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //setDisplayUseLogoEnabled(true);
+        // ToDo: Check to see if the user is authenticated and if not, send them to the login page
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

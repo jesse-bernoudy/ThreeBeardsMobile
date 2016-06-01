@@ -6,6 +6,7 @@ import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserActivity;
 import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserProfile;
 import com.threebeardsmobile.fitquest.oauth2.ServiceGenerator;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -18,6 +19,7 @@ import retrofit2.Response;
 public class FitBitUser {
     // GET https://api.fitbit.com/1/user/[user-id]/profile.json
 
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String token;
     private String userId;
 
@@ -55,7 +57,7 @@ public class FitBitUser {
             }
         });
 
-        Call<UserActivity> refreshActivity = fitBitApiService.getUserActivity(userId, "2016-05-31");
+        Call<UserActivity> refreshActivity = fitBitApiService.getUserActivity(userId, dateFormat.format(new Date()));
         refreshActivity.enqueue(new Callback<UserActivity>() {
             @Override
             public void onResponse(Call<UserActivity> call, Response<UserActivity> response) {

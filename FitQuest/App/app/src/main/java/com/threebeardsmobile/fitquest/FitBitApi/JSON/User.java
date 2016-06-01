@@ -57,7 +57,7 @@ public class User {
     private String glucoseUnit;
     @SerializedName("height")
     @Expose
-    private Integer height;
+    private Double height;
     @SerializedName("heightUnit")
     @Expose
     private String heightUnit;
@@ -331,14 +331,14 @@ public class User {
     /**
      * @return The height
      */
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
     /**
      * @param height The height
      */
-    public void setHeight(Integer height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 

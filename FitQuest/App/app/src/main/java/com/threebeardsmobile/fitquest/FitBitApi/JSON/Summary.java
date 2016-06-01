@@ -6,14 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jesse on 5/30/2016.
- */
 public class Summary {
 
-    @SerializedName("activeScore")
-    @Expose
-    private Integer activeScore;
     @SerializedName("activityCalories")
     @Expose
     private Integer activityCalories;
@@ -26,9 +20,15 @@ public class Summary {
     @SerializedName("distances")
     @Expose
     private List<Distance> distances = new ArrayList<Distance>();
+    @SerializedName("elevation")
+    @Expose
+    private Double elevation;
     @SerializedName("fairlyActiveMinutes")
     @Expose
     private Integer fairlyActiveMinutes;
+    @SerializedName("floors")
+    @Expose
+    private Integer floors;
     @SerializedName("lightlyActiveMinutes")
     @Expose
     private Integer lightlyActiveMinutes;
@@ -44,24 +44,6 @@ public class Summary {
     @SerializedName("veryActiveMinutes")
     @Expose
     private Integer veryActiveMinutes;
-
-    /**
-     *
-     * @return
-     * The activeScore
-     */
-    public Integer getActiveScore() {
-        return activeScore;
-    }
-
-    /**
-     *
-     * @param activeScore
-     * The activeScore
-     */
-    public void setActiveScore(Integer activeScore) {
-        this.activeScore = activeScore;
-    }
 
     /**
      *
@@ -138,6 +120,24 @@ public class Summary {
     /**
      *
      * @return
+     * The elevation
+     */
+    public Double getElevation() {
+        return elevation;
+    }
+
+    /**
+     *
+     * @param elevation
+     * The elevation
+     */
+    public void setElevation(Double elevation) {
+        this.elevation = elevation;
+    }
+
+    /**
+     *
+     * @return
      * The fairlyActiveMinutes
      */
     public Integer getFairlyActiveMinutes() {
@@ -151,6 +151,24 @@ public class Summary {
      */
     public void setFairlyActiveMinutes(Integer fairlyActiveMinutes) {
         this.fairlyActiveMinutes = fairlyActiveMinutes;
+    }
+
+    /**
+     *
+     * @return
+     * The floors
+     */
+    public Integer getFloors() {
+        return floors;
+    }
+
+    /**
+     *
+     * @param floors
+     * The floors
+     */
+    public void setFloors(Integer floors) {
+        this.floors = floors;
     }
 
     /**
@@ -244,3 +262,4 @@ public class Summary {
     }
 
 }
+

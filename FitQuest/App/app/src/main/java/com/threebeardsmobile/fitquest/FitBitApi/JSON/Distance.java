@@ -3,46 +3,49 @@ package com.threebeardsmobile.fitquest.FitBitApi.JSON;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Jesse on 5/30/2016.
- */
-public
-class Distance {
+public class Distance {
 
     @SerializedName("activity")
     @Expose
     private String activity;
     @SerializedName("distance")
     @Expose
-    private Integer distance;
+    private Double distance;
 
     /**
-     * @return The activity
+     *
+     * @return
+     * The activity
      */
     public String getActivity() {
         return activity;
     }
 
     /**
-     * @param activity The activity
+     *
+     * @param activity
+     * The activity
      */
     public void setActivity(String activity) {
         this.activity = activity;
     }
 
     /**
-     * @return The distance
+     *
+     * @return
+     * The distance
      */
-    public Integer getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
     /**
-     * @param distance The distance
+     *
+     * @param distance
+     * The distance
      */
-    public void setDistance(Integer distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
 }
-

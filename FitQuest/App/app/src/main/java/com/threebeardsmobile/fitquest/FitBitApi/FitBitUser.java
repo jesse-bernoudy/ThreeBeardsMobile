@@ -2,8 +2,8 @@ package com.threebeardsmobile.fitquest.FitBitApi;
 
 import android.util.Log;
 
-import com.threebeardsmobile.fitquest.FitBitApi.JSON.Activity;
-import com.threebeardsmobile.fitquest.FitBitApi.JSON.User;
+import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserActivity;
+import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserProfile;
 import com.threebeardsmobile.fitquest.oauth2.ServiceGenerator;
 
 import java.util.Date;
@@ -27,8 +27,8 @@ public class FitBitUser {
     private int mYesterdaysSteps;
     private Date mLastUpdated;
 
-    private User profile;
-    private Activity activities;
+    private UserProfile profile;
+    private UserActivity activity;
 
     public FitBitUser(String token, String userId){
         this.token = token;
@@ -37,10 +37,10 @@ public class FitBitUser {
 
     public void refresh() {
         FitBitApiService fitBitApiService = ServiceGenerator.createService(FitBitServiceGenerator.USER_BASE_URL, FitBitApiService.class, token);
-        Call<User> call = fitBitApiService.getUserProfile(userId);
-        call.enqueue(new Callback<User>() {
+        Call<UserProfile> refreshUserProfile = fitBitApiService.getUserProfile(userId);
+        refreshUserProfile.enqueue(new Callback<UserProfile>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
                 if (response.isSuccessful()) {
                     profile = response.body();
                 } else {
@@ -49,7 +49,25 @@ public class FitBitUser {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserProfile> call, Throwable t) {
+                // something went completely south (like no internet connection)
+                Log.d("Error", t.getMessage());
+            }
+        });
+
+        Call<UserActivity> refreshActivity = fitBitApiService.getUserActivity(userId, "2016-05-31");
+        refreshActivity.enqueue(new Callback<UserActivity>() {
+            @Override
+            public void onResponse(Call<UserActivity> call, Response<UserActivity> response) {
+                if (response.isSuccessful()) {
+                    activity = response.body();
+                } else {
+                    // error response, no access to resource?
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserActivity> call, Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
             }

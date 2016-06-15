@@ -1,10 +1,14 @@
 package com.threebeardsmobile.fitquest.FitBitApi;
 
+import com.threebeardsmobile.fitquest.FitBitApi.JSON.StepHistory;
 import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserActivity;
 import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserProfile;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -18,4 +22,13 @@ public interface FitBitApiService {
 
     @GET("{userId}/activities/date/{date}.json")
     Call<UserActivity> getUserActivity(@Path("userId") String userId, @Path("date") String date);
+
+    @GET("{userId}/activities/steps/date/today/7d.json")
+    Call<StepHistory> getUserStepHistory(@Path("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("/revoke")
+    Call<String> logout(
+            @Field("token") String token);
+
 }

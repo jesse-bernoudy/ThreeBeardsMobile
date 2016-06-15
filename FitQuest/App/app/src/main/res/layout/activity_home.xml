@@ -14,7 +14,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/loginbutton" android:text="login"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logoututton" android:text="logout"
+        android:layout_alignTop="@+id/loginbutton"
+        android:layout_toEndOf="@+id/loginbutton" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,24 +29,52 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/loginbutton"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/loginbutton">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User Name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/userName" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Current Steps" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/todaysSteps" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Previous 3 days steps" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/yesterdaysSteps" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Daily Step Goal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dailyGoal" />
     </LinearLayout>
 </RelativeLayout>

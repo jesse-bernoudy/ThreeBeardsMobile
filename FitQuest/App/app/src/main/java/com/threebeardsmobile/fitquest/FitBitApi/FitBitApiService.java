@@ -4,7 +4,9 @@ import com.threebeardsmobile.fitquest.FitBitApi.JSON.StepHistory;
 import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserActivity;
 import com.threebeardsmobile.fitquest.FitBitApi.JSON.UserProfile;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -27,8 +29,7 @@ public interface FitBitApiService {
     Call<StepHistory> getUserStepHistory(@Path("userId") String userId);
 
     @FormUrlEncoded
-    @POST("/revoke")
-    Call<String> logout(
-            @Field("token") String token);
+    @POST("revoke")
+    Call<ResponseBody> logout(@Field("token")String token);
 
 }

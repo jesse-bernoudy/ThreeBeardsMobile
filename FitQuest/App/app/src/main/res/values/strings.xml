@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FitQuest</string>
+    <string name="user_id_key">user_id_key</string>
+    <string name="access_token_key">access_token_key</string>
 </resources>

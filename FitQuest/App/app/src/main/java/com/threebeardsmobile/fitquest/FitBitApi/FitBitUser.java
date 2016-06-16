@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,8 +25,14 @@ public class FitBitUser {
     // GET https://api.fitbit.com/1/user/[user-id]/profile.json
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private String mToken;
-    private String mUserId;
+
+    public String getToken() {
+        return mToken;
+    }
+
+    public String getUserId() {
+        return mUserId;
+    }
 
     public String getDisplayName() {
         return mDisplayName;
@@ -47,7 +54,8 @@ public class FitBitUser {
         return mStepCountHistory;
     }
 
-
+    private String mToken;
+    private String mUserId;
     private String mDisplayName;
     private Integer mCurrentSteps;
     private Integer mDailyGoal;
@@ -59,10 +67,9 @@ public class FitBitUser {
 
     public interface FitBitUserListener {
         void OnUserProfileUpdated();
-
         void OnUserActivityUpdated();
-
         void OnStepHistoryUpdated();
+        void OnUserLoggedOut();
     }
 
     public FitBitUser(String token, String userId, FitBitUserListener listener) {
@@ -126,10 +133,10 @@ public class FitBitUser {
             @Override
             public void onResponse(Call<StepHistory> call, Response<StepHistory> response) {
                 if (response.isSuccessful()) {
-                    StepHistory stepHistory= response.body();
+                    StepHistory stepHistory = response.body();
                     mStepCountHistory = new ArrayList<>();
                     List<ActivitiesStep> steps = stepHistory.getActivitiesSteps();
-                    for(int i = steps.size() - 2; i > steps.size() - 5; i--){
+                    for (int i = steps.size() - 2; i > steps.size() - 5; i--) {
                         mStepCountHistory.add(steps.get(i).getValue());
                     }
                     mListener.OnStepHistoryUpdated();
@@ -148,19 +155,19 @@ public class FitBitUser {
 
     public void logout() {
         FitBitApiService fitBitApiService = ServiceGenerator.createService(FitBitServiceGenerator.API_LOGOUT_URL, FitBitApiService.class, mToken);
-        Call<String> logout = fitBitApiService.logout(mToken);
-        logout.enqueue(new Callback<String>() {
+        Call<ResponseBody> logout = fitBitApiService.logout(mToken);
+        logout.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-
+                    mListener.OnUserLoggedOut();
                 } else {
                     // error response, no access to resource?
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
             }

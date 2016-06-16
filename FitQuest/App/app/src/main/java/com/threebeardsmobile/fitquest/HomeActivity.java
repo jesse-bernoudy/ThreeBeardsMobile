@@ -1,6 +1,8 @@
 package com.threebeardsmobile.fitquest;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +14,6 @@ import android.widget.Toast;
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitServiceGenerator;
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitUser;
 
-import java.util.Date;
 import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBitUserListener {
@@ -35,16 +36,21 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(FitBitServiceGenerator.API_LOGIN_URL +
-                                "authorize?response_type=token" +
-                                "&client_id=" + mClientId +
-                                "&redirect_uri=" + mRedirectUri +
-                                "&scope=activity heartrate profile" +
-                                "&expires_in=2592000" + //30 days
-                                "&state=" + mState));
-                startActivity(intent);
+                if(mCurrentUser == null) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(FitBitServiceGenerator.API_LOGIN_URL +
+                                    "authorize?response_type=token" +
+                                    "&client_id=" + mClientId +
+                                    "&redirect_uri=" + mRedirectUri +
+                                    "&scope=activity heartrate profile" +
+                                    "&expires_in=2592000" + //30 days
+                                    "&state=" + mState));
+                    startActivity(intent);
+                } else {
+                    mCurrentUser.refresh();
+                    mCurrentUser.refreshStepHistory();
+                }
             }
         });
         Button logoutButton = (Button) findViewById(R.id.logoututton);
@@ -56,6 +62,18 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mCurrentUser != null) {
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.user_id_key), mCurrentUser.getUserId());
+            editor.putString(getString(R.string.access_token_key), mCurrentUser.getToken());
+            editor.commit();
+        }
     }
 
     @Override
@@ -81,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
                 // use the parameter your API exposes for the token
                 String token = parameters.get("access_token");
                 String userId = parameters.get("user_id");
+                Toast.makeText(this, "New user logged in.", Toast.LENGTH_LONG);
                 if (token != null && userId != null) {
                     mCurrentUser = new FitBitUser(token, userId, this);
                 }
@@ -91,6 +110,15 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
             // ToDo: Add a time check from last refresh
             mCurrentUser.refresh();
             mCurrentUser.refreshStepHistory();
+        } else {
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            String userId = sharedPref.getString(getString(R.string.user_id_key), "");
+            String accessToken = sharedPref.getString(getString(R.string.access_token_key), "");
+            if(userId != null && accessToken != null) {
+                mCurrentUser = new FitBitUser(userId, accessToken, this);
+                mCurrentUser.refresh();
+                mCurrentUser.refreshStepHistory();
+            }
         }
     }
 
@@ -136,6 +164,42 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
                     steps.append(", ");
                 }
                 yesterdaysSteps.setText(steps.toString());
+            }
+        });
+    }
+
+    @Override
+    public void OnUserLoggedOut() {
+        Toast.makeText(this, mCurrentUser.getDisplayName() + " logged out", Toast.LENGTH_LONG);
+        mCurrentUser = null;
+        final TextView userName = (TextView) findViewById(R.id.userName);
+        userName.post(new Runnable() {
+            public void run() {
+                userName.setText("");
+            }
+        });
+
+        final TextView todaysSteps = (TextView) findViewById(R.id.todaysSteps);
+
+        todaysSteps.post(new Runnable() {
+            public void run() {
+                todaysSteps.setText("");
+            }
+        });
+
+        final TextView dailyGoal = (TextView) findViewById(R.id.dailyGoal);
+
+        dailyGoal.post(new Runnable() {
+            public void run() {
+                dailyGoal.setText("");
+            }
+        });
+
+        final TextView yesterdaysSteps = (TextView) findViewById(R.id.yesterdaysSteps);
+
+        yesterdaysSteps.post(new Runnable() {
+            public void run() {
+                yesterdaysSteps.setText("");
             }
         });
     }

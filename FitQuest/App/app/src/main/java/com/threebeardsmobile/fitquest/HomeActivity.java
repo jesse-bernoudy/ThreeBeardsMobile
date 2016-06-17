@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,10 +20,6 @@ import com.threebeardsmobile.fitquest.FitBitApi.FitBitUser;
 import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBitUserListener {
-    public static final int GET_USER_ACCESS_TOKEN = 1;  // The request code
-    public static final String USER_ACCESS_TOKEN = "access_token";
-    public static final String USER_ID = "user_id";
-    public static final String ERROR_MSG = "error_msg";
     private final String mClientId = "227MH4";
     private final String mRedirectUri = "http://bobmchenry.com/threebeards";
     private final String mState = Long.toString(mClientId.hashCode() + mRedirectUri.hashCode());
@@ -30,38 +29,33 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+    }
 
-        // ToDo: Check to see if the user is authenticated and if not, send them to the login page
-        Button loginButton = (Button) findViewById(R.id.loginbutton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refreshButton:
                 if(mCurrentUser == null) {
-                    Intent intent = new Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(FitBitServiceGenerator.API_LOGIN_URL +
-                                    "authorize?response_type=token" +
-                                    "&client_id=" + mClientId +
-                                    "&redirect_uri=" + mRedirectUri +
-                                    "&scope=activity heartrate profile" +
-                                    "&expires_in=2592000" + //30 days
-                                    "&state=" + mState));
-                    startActivity(intent);
+                    login();
                 } else {
                     mCurrentUser.refresh();
                     mCurrentUser.refreshStepHistory();
                 }
-            }
-        });
-        Button logoutButton = (Button) findViewById(R.id.logoututton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.logoutButton:
                 if (mCurrentUser != null) {
                     mCurrentUser.logout();
                 }
-            }
-        });
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -92,14 +86,14 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
             String error = parameters.get("error");
             if (error != null) {
                 // show an error message here
-                Toast.makeText(this, "Error: " + error, Toast.LENGTH_LONG);
+                showToast("Error: " + error);
             } else if (state.compareTo(mState) != 0) {
-                Toast.makeText(this, "Invalid URI. Possible cross-site request forgery (CSRF)", Toast.LENGTH_LONG);
+                showToast("Invalid URI. Possible cross-site request forgery (CSRF)");
             } else {
                 // use the parameter your API exposes for the token
                 String token = parameters.get("access_token");
                 String userId = parameters.get("user_id");
-                Toast.makeText(this, "New user logged in.", Toast.LENGTH_LONG);
+                showToast("New user logged in.");
                 if (token != null && userId != null) {
                     mCurrentUser = new FitBitUser(token, userId, this);
                 }
@@ -108,13 +102,19 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
 
         if (mCurrentUser != null) {
             // ToDo: Add a time check from last refresh
+            final TextView userName = (TextView) findViewById(R.id.userName);
+            userName.post(new Runnable() {
+                public void run() {
+                    userName.setText(mCurrentUser.getDisplayName());
+                }
+            });
             mCurrentUser.refresh();
             mCurrentUser.refreshStepHistory();
         } else {
             SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
             String userId = sharedPref.getString(getString(R.string.user_id_key), "");
             String accessToken = sharedPref.getString(getString(R.string.access_token_key), "");
-            if(userId != null && accessToken != null) {
+            if(!userId.isEmpty() && !accessToken.isEmpty()) {
                 mCurrentUser = new FitBitUser(userId, accessToken, this);
                 mCurrentUser.refresh();
                 mCurrentUser.refreshStepHistory();
@@ -170,8 +170,31 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
 
     @Override
     public void OnUserLoggedOut() {
-        Toast.makeText(this, mCurrentUser.getDisplayName() + " logged out", Toast.LENGTH_LONG);
+        showToast(mCurrentUser.getDisplayName() + " logged out");
+        resetUser();
+    }
+
+    private void login() {
+        Intent intent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(FitBitServiceGenerator.API_LOGIN_URL +
+                        "authorize?response_type=token" +
+                        "&client_id=" + mClientId +
+                        "&redirect_uri=" + mRedirectUri +
+                        "&scope=activity heartrate profile" +
+                        "&expires_in=2592000" + //30 days
+                        "&state=" + mState));
+        startActivity(intent);
+    }
+
+    private void resetUser() {
         mCurrentUser = null;
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(getString(R.string.user_id_key));
+        editor.remove(getString(R.string.access_token_key));
+        editor.commit();
+
         final TextView userName = (TextView) findViewById(R.id.userName);
         userName.post(new Runnable() {
             public void run() {
@@ -202,6 +225,21 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
                 yesterdaysSteps.setText("");
             }
         });
+    }
+
+    private void showToast(final String message) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void OnTokenExpired() {
+        showToast("Login expired, please refresh user");
+        resetUser();
     }
 }
 

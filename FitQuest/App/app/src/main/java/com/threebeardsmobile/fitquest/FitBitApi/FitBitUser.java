@@ -70,6 +70,7 @@ public class FitBitUser {
         void OnUserActivityUpdated();
         void OnStepHistoryUpdated();
         void OnUserLoggedOut();
+        void OnTokenExpired();
     }
 
     public FitBitUser(String token, String userId, FitBitUserListener listener) {
@@ -91,6 +92,7 @@ public class FitBitUser {
                     mListener.OnUserProfileUpdated();
                 } else {
                     // error response, no access to resource?
+                    mListener.OnTokenExpired();
                 }
             }
 
@@ -116,6 +118,7 @@ public class FitBitUser {
 
                 } else {
                     // error response, no access to resource?
+                    mListener.OnTokenExpired();
                 }
             }
 
@@ -142,6 +145,7 @@ public class FitBitUser {
                     mListener.OnStepHistoryUpdated();
                 } else {
                     // error response, no access to resource?
+                    mListener.OnTokenExpired();
                 }
             }
 

@@ -7,23 +7,30 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/fitquest_launcher"
-        android:logo="@mipmap/fitquest_launcher"
         android:label="@string/app_name"
+        android:logo="@mipmap/fitquest_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="bobmchenry.com" android:scheme="http" android:path="/threebeards"/>
+
+                <data
+                    android:host="bobmchenry.com"
+                    android:path="/threebeards"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".AnimatedActivity"></activity>
     </application>
 
 </manifest>

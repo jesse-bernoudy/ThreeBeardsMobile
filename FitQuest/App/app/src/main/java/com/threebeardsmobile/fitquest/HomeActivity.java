@@ -3,12 +3,14 @@ package com.threebeardsmobile.fitquest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitServiceGenerator;
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitUser;
+import com.threebeardsmobile.fitquest.view.WalkingView;
 
 import java.util.HashMap;
 
@@ -24,11 +27,26 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
     private final String mRedirectUri = "http://bobmchenry.com/threebeards";
     private final String mState = Long.toString(mClientId.hashCode() + mRedirectUri.hashCode());
     private FitBitUser mCurrentUser;
+    private WalkingView wv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
+        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        wv = new WalkingView(this);
+        setContentView(wv);
+
+        wv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                wv.animateSprite();
+                return false;
+            }
+        });
+
+
     }
 
     @Override

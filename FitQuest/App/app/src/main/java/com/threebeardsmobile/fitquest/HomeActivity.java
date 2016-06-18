@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitServiceGenerator;
 import com.threebeardsmobile.fitquest.FitBitApi.FitBitUser;
+import com.threebeardsmobile.fitquest.FitBitApi.JSON.StepHistory;
 import com.threebeardsmobile.fitquest.view.WalkingView;
 
 import java.util.HashMap;
@@ -33,14 +34,17 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_home);
         //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        wv = new WalkingView(this, 10000);
+        wv = new WalkingView(this, mCurrentUser.getDailyGoal());
         setContentView(wv);
 
         wv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // TODO add previous and newSteps to control animation.
-                wv.animateSprite(3000,5000, 10000);
+
+                wv.animateSprite(
+                        mCurrentUser.getCurrentSteps()
+                        );
                 return false;
             }
         });
@@ -117,12 +121,12 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
 
         if (mCurrentUser != null) {
             // ToDo: Add a time check from last refresh
-            final TextView userName = (TextView) findViewById(R.id.userName);
-            userName.post(new Runnable() {
-                public void run() {
-                    userName.setText(mCurrentUser.getDisplayName());
-                }
-            });
+//            final TextView userName = (TextView) findViewById(R.id.userName);
+//            userName.post(new Runnable() {
+//                public void run() {
+//                    userName.setText(mCurrentUser.getDisplayName());
+//                }
+//            });
             mCurrentUser.refresh();
             mCurrentUser.refreshStepHistory();
         } else {
@@ -139,48 +143,48 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
 
     @Override
     public void OnUserProfileUpdated() {
-        final TextView userName = (TextView) findViewById(R.id.userName);
-
-        userName.post(new Runnable() {
-            public void run() {
-                userName.setText(mCurrentUser.getDisplayName());
-            }
-        });
+//        final TextView userName = (TextView) findViewById(R.id.userName);
+//
+//        userName.post(new Runnable() {
+//            public void run() {
+//                userName.setText(mCurrentUser.getDisplayName());
+//            }
+//        });
     }
 
     @Override
     public void OnUserActivityUpdated() {
-        final TextView todaysSteps = (TextView) findViewById(R.id.todaysSteps);
-        final TextView dailyGoal = (TextView) findViewById(R.id.dailyGoal);
-
-        todaysSteps.post(new Runnable() {
-            public void run() {
-                todaysSteps.setText(mCurrentUser.getCurrentSteps().toString());
-            }
-        });
-
-        dailyGoal.post(new Runnable() {
-            public void run() {
-                dailyGoal.setText(mCurrentUser.getDailyGoal().toString());
-            }
-        });
+//        final TextView todaysSteps = (TextView) findViewById(R.id.todaysSteps);
+//        final TextView dailyGoal = (TextView) findViewById(R.id.dailyGoal);
+//
+//        todaysSteps.post(new Runnable() {
+//            public void run() {
+//                todaysSteps.setText(mCurrentUser.getCurrentSteps().toString());
+//            }
+//        });
+//
+//        dailyGoal.post(new Runnable() {
+//            public void run() {
+//                dailyGoal.setText(mCurrentUser.getDailyGoal().toString());
+//            }
+//        });
 
     }
 
     @Override
     public void OnStepHistoryUpdated() {
-        final TextView yesterdaysSteps = (TextView) findViewById(R.id.yesterdaysSteps);
-
-        yesterdaysSteps.post(new Runnable() {
-            public void run() {
-                StringBuilder steps = new StringBuilder();
-                for (Integer s : mCurrentUser.getStepCountHistory()) {
-                    steps.append(s.toString());
-                    steps.append(", ");
-                }
-                yesterdaysSteps.setText(steps.toString());
-            }
-        });
+//        final TextView yesterdaysSteps = (TextView) findViewById(R.id.yesterdaysSteps);
+//
+//        yesterdaysSteps.post(new Runnable() {
+//            public void run() {
+//                StringBuilder steps = new StringBuilder();
+//                for (Integer s : mCurrentUser.getStepCountHistory()) {
+//                    steps.append(s.toString());
+//                    steps.append(", ");
+//                }
+//                yesterdaysSteps.setText(steps.toString());
+//            }
+//        });
     }
 
     @Override
@@ -210,36 +214,36 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
         editor.remove(getString(R.string.access_token_key));
         editor.commit();
 
-        final TextView userName = (TextView) findViewById(R.id.userName);
-        userName.post(new Runnable() {
-            public void run() {
-                userName.setText("");
-            }
-        });
-
-        final TextView todaysSteps = (TextView) findViewById(R.id.todaysSteps);
-
-        todaysSteps.post(new Runnable() {
-            public void run() {
-                todaysSteps.setText("");
-            }
-        });
-
-        final TextView dailyGoal = (TextView) findViewById(R.id.dailyGoal);
-
-        dailyGoal.post(new Runnable() {
-            public void run() {
-                dailyGoal.setText("");
-            }
-        });
-
-        final TextView yesterdaysSteps = (TextView) findViewById(R.id.yesterdaysSteps);
-
-        yesterdaysSteps.post(new Runnable() {
-            public void run() {
-                yesterdaysSteps.setText("");
-            }
-        });
+//        final TextView userName = (TextView) findViewById(R.id.userName);
+//        userName.post(new Runnable() {
+//            public void run() {
+//                userName.setText("");
+//            }
+//        });
+//
+//        final TextView todaysSteps = (TextView) findViewById(R.id.todaysSteps);
+//
+//        todaysSteps.post(new Runnable() {
+//            public void run() {
+//                todaysSteps.setText("");
+//            }
+//        });
+//
+//        final TextView dailyGoal = (TextView) findViewById(R.id.dailyGoal);
+//
+//        dailyGoal.post(new Runnable() {
+//            public void run() {
+//                dailyGoal.setText("");
+//            }
+//        });
+//
+//        final TextView yesterdaysSteps = (TextView) findViewById(R.id.yesterdaysSteps);
+//
+//        yesterdaysSteps.post(new Runnable() {
+//            public void run() {
+//                yesterdaysSteps.setText("");
+//            }
+//        });
     }
 
     private void showToast(final String message) {

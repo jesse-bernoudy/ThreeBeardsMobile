@@ -28,9 +28,23 @@ public class WalkingView extends View{
     SurfaceHolder holder;
 
     int height, width;
-    int steps, goal;
     Paint textPaint;
     String message;
+    boolean isRunning;
+
+
+    public int getSteps() {
+        return steps;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
+
+    //User info for message
+    int steps, goal;
+
+
 
     public WalkingView(Context context, int stepGoal) {
         super(context);
@@ -52,35 +66,38 @@ public class WalkingView extends View{
 
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(60);
+        textPaint.setTextSize(45);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        message = "This is a test message";
+        message = "Step forth to begin your quest.\nTap the screen to move.";
 
         goal = stepGoal;
-
+        isRunning = false;
     }
 
 
-    public void animateSprite(int prevSteps, int newSteps, int goal) {
-        final int dx = (int) (Math.round((newSteps - prevSteps) * (double)(getWidth()/goal)));
+    public void animateSprite(int newSteps) {
+        final int dx = (int) (Math.round((newSteps - steps) * (double)(getWidth()/goal)));
 
         new Thread(
                 new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = steps; i < getWidth(); i+=3){
-                        steps = i;
-                        try {
-                            Thread.sleep(10);
-                            postInvalidate();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    if (!isRunning){
+                        isRunning = true;
+                        for (int i = steps; i < getWidth(); i+=6){
+                            steps = i;
+                            try {
+                                Thread.sleep(42);
+                                postInvalidate();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
 
+                        }
+                        isRunning = false;
                     }
         }}).start();
         steps = 0;
-
 
     }
 
@@ -109,4 +126,7 @@ public class WalkingView extends View{
 
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

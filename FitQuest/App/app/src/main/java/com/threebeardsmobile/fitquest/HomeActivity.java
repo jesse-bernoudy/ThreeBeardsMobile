@@ -3,7 +3,6 @@ package com.threebeardsmobile.fitquest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,18 +33,17 @@ public class HomeActivity extends AppCompatActivity implements FitBitUser.FitBit
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_home);
         //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        wv = new WalkingView(this);
+        wv = new WalkingView(this, 10000);
         setContentView(wv);
 
         wv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                wv.animateSprite();
+                // TODO add previous and newSteps to control animation.
+                wv.animateSprite(3000,5000, 10000);
                 return false;
             }
         });
-
-
     }
 
     @Override

@@ -15,7 +15,7 @@ public class AnimatedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_animated_layout);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        WalkingView wv = new WalkingView(this);
+        WalkingView wv = new WalkingView(this, 10000);
         setContentView(wv);
 
         wv.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package com.threebeardsmobile.fitquest.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,14 +9,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 
-import com.threebeardsmobile.fitquest.FitBitApi.FitBitUser;
 import com.threebeardsmobile.fitquest.R;
 
 /**
@@ -33,9 +28,11 @@ public class WalkingView extends View{
     SurfaceHolder holder;
 
     int height, width;
-    int steps;
+    int steps, goal;
+    Paint textPaint;
+    String message;
 
-    public WalkingView(Context context) {
+    public WalkingView(Context context, int stepGoal) {
         super(context);
 
         height = this.getHeight();
@@ -53,15 +50,25 @@ public class WalkingView extends View{
 
         steps = 0;
 
+        textPaint = new Paint();
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(60);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        message = "This is a test message";
+
+        goal = stepGoal;
+
     }
 
 
-    public void animateSprite(int prevSteps, int newSteps) {
+    public void animateSprite(int prevSteps, int newSteps, int goal) {
+        final int dx = (int) (Math.round((newSteps - prevSteps) * (double)(getWidth()/goal)));
+
         new Thread(
                 new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = steps; i < getWidth()-200; i+=3){
+                    for (int i = steps; i < getWidth(); i+=3){
                         steps = i;
                         try {
                             Thread.sleep(10);
@@ -88,11 +95,16 @@ public class WalkingView extends View{
         cy = h / 1.5f;
 
         c.drawRect(10, 10, w - 10, (h / 4) - 10, p);
+        c.drawText(message, w/2, h/8, textPaint);
 
         Bitmap myBitmap = BitmapFactory.decodeResource(
                 getResources(),
                 R.drawable.sticksprite);
         c.drawBitmap(myBitmap, cx, cy, p);
+
+        c.drawRect(10, h-40, 15, h-20, p);
+        c.drawRect(w-15, h-40, w-10, h-20, p);
+        c.drawRect(10, h-20, w-10, h-10, p);
 
 
     }
